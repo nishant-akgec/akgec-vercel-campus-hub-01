@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CampusHub – Your Study Companion</title>
+    <meta name="description"
+        content="CampusHub helps students find notes, resources, and study material for every college, branch, and semester." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <!-- ── NAVBAR ── -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a class="nav-logo" href="#" onclick="navigateTo('home')">
+                <div class="logo-icon">📚</div>
+                <span>CampusHub</span>
+            </a>
+            <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" class="nav-link active" id="nav-home" onclick="navigateTo('home')">Home</a></li>
+                <li><a href="#" class="nav-link" id="nav-upload" onclick="guardedNavigate('upload')">Upload</a></li>
+                <li><a href="#" class="nav-link" id="nav-leaderboard"
+                        onclick="navigateTo('leaderboard')">Leaderboard</a></li>
+                <li><a href="#" class="nav-link" id="nav-profile" onclick="navigateTo('profile')">Profile</a></li>
+            </ul>
+            <!-- AUTH AREA (rendered by JS) -->
+            <div class="nav-auth" id="navAuth"></div>
+        </div>
+    </nav>
+
+    <!-- ── PAGES ── -->
+    <main class="main-wrapper">
+
+        <!-- HOME PAGE -->
+        <section class="page active" id="page-home">
+            <div class="container hero-container minimal-mvp">
+                <div class="akgec-badge">Ajay Kumar Garg Engineering College, Ghaziabad</div>
+                <h1 class="hero-title">Find Notes for Your Semester</h1>
+                <p class="hero-sub">Notes for AKGEC Students</p>
+
+                <div class="filter-card minimal" id="filterCard">
+                    <div class="filter-fields-row">
+                        <div class="filter-group">
+                            <label for="selectBranch">Branch</label>
+                            <div class="select-wrapper">
+                                <select id="selectBranch">
+                                    <option value="">Select Branch</option>
+                                    <option>CSE (AI & ML)</option>
+                                    <option>CSE (Data Science)</option>
+                                    <option>IT</option>
+                                    <option>ECE</option>
+                                    <option>Mechanical</option>
+                                    <option>Civil</option>
+                                </select>
+                                <span class="select-arrow">▾</span>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="selectSemester">Semester</label>
+                            <div class="select-wrapper">
+                                <select id="selectSemester">
+                                    <option value="">Select Semester</option>
+                                    <option>Semester 1</option>
+                                    <option>Semester 2</option>
+                                    <option>Semester 3</option>
+                                    <option>Semester 4</option>
+                                    <option>Semester 5</option>
+                                    <option>Semester 6</option>
+                                    <option>Semester 7</option>
+                                    <option>Semester 8</option>
+                                </select>
+                                <span class="select-arrow">▾</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary hero-btn-mvp" onclick="handleExplore()">
+                        Explore Notes →
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- NOTES PAGE -->
+        <section class="page" id="page-notes">
+            <div class="container notes-container">
+                <div class="page-header">
+                    <button class="back-btn" onclick="navigateTo('home')">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path d="M19 12H5M12 19l-7-7 7-7" />
+                        </svg>
+                        Back
+                    </button>
+                    <div class="page-header-text">
+                        <h2>📖 Study Notes</h2>
+                        <p id="notesSubtitle">Showing all subjects</p>
+                    </div>
+                </div>
+
+                <div class="search-bar-wrap">
+                    <svg class="search-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.35-4.35" />
+                    </svg>
+                    <input type="text" id="searchInput" class="search-bar" placeholder="Search subjects…"
+                        oninput="filterSubjects()" />
+                </div>
+
+                <div class="subject-grid" id="subjectGrid">
+                    <!-- Cards injected by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SUBJECT DETAIL / NOTES BROWSING PAGE -->
+        <section class="page" id="page-subject">
+            <div class="container subject-container">
+
+                <!-- Header -->
+                <div class="page-header">
+                    <button class="back-btn" onclick="navigateTo('notes')">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path d="M19 12H5M12 19l-7-7 7-7" />
+                        </svg>
+                        Back
+                    </button>
+                    <div class="page-header-text">
+                        <h2 id="subjectTitle">Physics</h2>
+                        <p id="subjectMeta">12 notes · 4 contributors</p>
+                    </div>
+                </div>
+
+                <!-- Toolbar: Search + Sort -->
+                <div class="notes-toolbar">
+                    <div class="notes-search-wrap">
+                        <svg class="search-icon" width="16" height="16" fill="none" stroke="currentColor"
+                            stroke-width="2" viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.35-4.35" />
+                        </svg>
+                        <input type="text" id="noteSearchInput" class="notes-search-bar"
+                            placeholder="Search notes by title or chapter…" oninput="onNotesSearch()" />
+                    </div>
+
+                    <div class="sort-wrap">
+                        <label for="sortSelect" class="sort-label">Sort by</label>
+                        <div class="select-wrapper sort-select-wrapper">
+                            <select id="sortSelect" class="sort-select" onchange="onNotesSort()">
+                                <option value="latest">🕐 Latest</option>
+                                <option value="top-rated">⭐ Top Rated</option>
+                                <option value="most-downloaded">⬇ Most Downloaded</option>
+                            </select>
+                            <span class="select-arrow">▾</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Result count -->
+                <div class="note-result-count" id="noteResultCount"></div>
+
+                <!-- Note Cards -->
+                <div class="note-cards-list" id="noteCards">
+                    <!-- Injected by JS -->
+                </div>
+
+            </div>
+        </section>
+
+        <!-- UPLOAD PAGE -->
+        <section class="page" id="page-upload">
+            <div class="container upload-container">
+                <h2 class="section-title">📤 Upload Notes</h2>
+                <p class="section-sub">Share your knowledge and help your peers. Top contributors earn badges!</p>
+
+                <div class="upload-card">
+                    <form id="uploadForm" onsubmit="handleUpload(event)">
+                        <div class="upload-fields">
+                            <div class="field-group">
+                                <label for="upTitle">Note Title</label>
+                                <input type="text" id="upTitle" class="text-input"
+                                    placeholder="e.g. Thermodynamics Formula Sheet" required />
+                            </div>
+                            <div class="field-group">
+                                <label for="upSubject">Subject</label>
+                                <div class="select-wrapper">
+                                    <select id="upSubject" class="text-input" required>
+                                        <option value="">Select Subject</option>
+                                        <option value="maths1">Mathematics 1</option>
+                                        <option value="physics">Physics</option>
+                                        <option value="chemistry">Chemistry</option>
+                                        <option value="bee">Basic Electrical Engineering</option>
+                                        <option value="eng-mech">Engineering Mechanics</option>
+                                        <option value="maths2">Mathematics 2</option>
+                                        <option value="pps">Programming for Problem Solving</option>
+                                    </select>
+                                    <span class="select-arrow">▾</span>
+                                </div>
+                            </div>
+                            <div class="field-group">
+                                <label for="upChapter">Chapter / Topic</label>
+                                <input type="text" id="upChapter" class="text-input"
+                                    placeholder="e.g. Chapter 1 – Intro" required />
+                            </div>
+                            <div class="field-group">
+                                <label for="upPdfLink">PDF / Resource Link</label>
+                                <input type="url" id="upPdfLink" class="text-input"
+                                    placeholder="https://example.com/notes.pdf" required />
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 1rem;">Upload
+                            Notes</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- LOGIN PAGE -->
+        <section class="page" id="page-auth">
+            <div class="auth-wrapper">
+                <div class="auth-card">
+                    <div class="auth-logo">
+                        <div class="logo-icon" style="width: 48px; height: 48px; font-size: 1.5rem;">📚</div>
+                        <span class="auth-brand">CampusHub</span>
+                    </div>
+                    <h2 style="margin-bottom: 1.5rem;">Welcome back!</h2>
+                    <form class="auth-form" onsubmit="handleLogin(event)">
+                        <div class="auth-field">
+                            <label for="authName">Full Name</label>
+                            <input type="text" id="authName" class="auth-input" placeholder="Enter your name"
+                                required />
+                        </div>
+                        <div class="auth-field">
+                            <label for="authEmail">Email Address</label>
+                            <input type="email" id="authEmail" class="auth-input" placeholder="you@university.edu"
+                                required />
+                        </div>
+                        <button type="submit" class="btn-primary auth-submit">Login</button>
+                    </form>
+                    <div
+                        style="margin-top: 2rem; border-top: 1px solid var(--slate-100); padding-top: 1.5rem; text-align: center;">
+                        <p style="font-size: .85rem; color: var(--slate-500); margin-bottom: 0.75rem;">Testing the
+                            moderation system?</p>
+                        <button class="nav-admin-link" style="margin: 0; padding: .6rem 1.25rem; font-size: .85rem;"
+                            onclick="document.getElementById('authEmail').value='admin@campushub.com'; document.getElementById('authName').value='Admin User';">
+                            Quick Login as Admin
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ADMIN PANEL -->
+        <section class="page" id="page-admin">
+            <div class="container admin-container">
+                <div class="admin-header">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h2 class="section-title">🛡️ Admin Dashboard</h2>
+                            <p class="section-sub">Review and moderate pending note uploads.</p>
+                        </div>
+                        <div class="akgec-badge">MODERATION QUEUE</div>
+                    </div>
+                </div>
+                <div id="adminPendingList" class="admin-pending-list">
+                    <!-- Pending notes injected by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- LEADERBOARD PAGE -->
+        <section class="page" id="page-leaderboard">
+            <div class="container leaderboard-container">
+                <h2 class="section-title">🏆 Leaderboard</h2>
+                <p class="section-sub">Top contributors this month. Upload notes to earn points!</p>
+
+                <div class="podium-row">
+                    <div class="podium-item silver">
+                        <div class="podium-avatar">SK</div>
+                        <div class="podium-name">Suresh K.</div>
+                        <div class="podium-pts">840 pts</div>
+                        <div class="podium-rank">🥈 2nd</div>
+                    </div>
+                    <div class="podium-item gold">
+                        <div class="podium-avatar">AM</div>
+                        <div class="podium-name">Aryan M.</div>
+                        <div class="podium-pts">1,240 pts</div>
+                        <div class="podium-rank">🥇 1st</div>
+                    </div>
+                    <div class="podium-item bronze">
+                        <div class="podium-avatar">PR</div>
+                        <div class="podium-name">Priya R.</div>
+                        <div class="podium-pts">720 pts</div>
+                        <div class="podium-rank">🥉 3rd</div>
+                    </div>
+                </div>
+
+                <div class="lb-list" id="lbList"></div>
+            </div>
+        </section>
+
+        <!-- PROFILE PAGE -->
+        <section class="page" id="page-profile">
+            <div class="container profile-container">
+                <div class="profile-hero">
+                    <div class="profile-avatar-lg">RS</div>
+                    <h2 class="profile-name">Rahul Sharma</h2>
+                    <p class="profile-college">IIT Bombay · CSE · Sem 5</p>
+                    <div class="profile-badges">
+                        <span class="badge">⭐ Top Contributor</span>
+                        <span class="badge">📚 100+ Uploads</span>
+                        <span class="badge">🔥 7-Day Streak</span>
+                    </div>
+                </div>
+
+                <div class="profile-stats">
+                    <div class="pstat"><span class="pstat-n">142</span><span class="pstat-l">Uploads</span></div>
+                    <div class="pstat"><span class="pstat-n">3.2K</span><span class="pstat-l">Downloads</span></div>
+                    <div class="pstat"><span class="pstat-n">980</span><span class="pstat-l">Points</span></div>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Recent Uploads</h3>
+                    <div class="recent-list">
+                        <div class="recent-item"><span class="ri-icon">📄</span>
+                            <div>
+                                <p class="ri-title">Thermodynamics – Unit 2</p>
+                                <p class="ri-meta">Mech · Sem 3 · 2 days ago</p>
+                            </div><span class="ri-dls">128 ↓</span>
+                        </div>
+                        <div class="recent-item"><span class="ri-icon">📄</span>
+                            <div>
+                                <p class="ri-title">Data Structures Notes</p>
+                                <p class="ri-meta">CSE · Sem 3 · 5 days ago</p>
+                            </div><span class="ri-dls">245 ↓</span>
+                        </div>
+                        <div class="recent-item"><span class="ri-icon">📄</span>
+                            <div>
+                                <p class="ri-title">Engineering Maths – Integration</p>
+                                <p class="ri-meta">All · Sem 2 · 1 week ago</p>
+                            </div><span class="ri-dls">310 ↓</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-outline" onclick="showToast('Logging out… 👋')">Log Out</button>
+            </div>
+        </section>
+
+        <!-- LOGIN / SIGNUP PAGE -->
+        <section class="page" id="page-auth">
+            <div class="auth-wrapper">
+                <div class="auth-card">
+
+                    <!-- Logo -->
+                    <div class="auth-logo">
+                        <div class="logo-icon" style="width:44px;height:44px;font-size:1.25rem">📚</div>
+                        <span class="auth-brand">CampusHub</span>
+                    </div>
+
+                    <!-- Tabs -->
+                    <div class="auth-tabs">
+                        <button class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Log In</button>
+                        <button class="auth-tab" id="tab-signup" onclick="switchAuthTab('signup')">Sign Up</button>
+                    </div>
+
+                    <!-- LOGIN FORM -->
+                    <form class="auth-form active" id="form-login" onsubmit="handleLogin(event)" novalidate>
+                        <div class="auth-field">
+                            <label for="loginEmail">Email</label>
+                            <input type="email" id="loginEmail" class="auth-input" placeholder="you@college.edu"
+                                required />
+                        </div>
+                        <div class="auth-field">
+                            <label for="loginPassword">Password</label>
+                            <div class="pw-wrap">
+                                <input type="password" id="loginPassword" class="auth-input"
+                                    placeholder="Enter password" required />
+                                <button type="button" class="pw-toggle" onclick="togglePw('loginPassword', this)"
+                                    aria-label="Show password">👁</button>
+                            </div>
+                        </div>
+                        <div class="auth-error" id="loginError"></div>
+                        <button type="submit" class="btn-primary auth-submit">Log In →</button>
+                        <p class="auth-switch">Don't have an account? <a href="#" onclick="switchAuthTab('signup')">Sign
+                                up</a></p>
+                    </form>
+
+                    <!-- SIGNUP FORM -->
+                    <form class="auth-form" id="form-signup" onsubmit="handleSignup(event)" novalidate>
+                        <div class="auth-field">
+                            <label for="signupName">Full Name</label>
+                            <input type="text" id="signupName" class="auth-input" placeholder="Rahul Sharma" required />
+                        </div>
+                        <div class="auth-field">
+                            <label for="signupEmail">Email</label>
+                            <input type="email" id="signupEmail" class="auth-input" placeholder="you@college.edu"
+                                required />
+                        </div>
+                        <div class="auth-field">
+                            <label for="signupPassword">Password</label>
+                            <div class="pw-wrap">
+                                <input type="password" id="signupPassword" class="auth-input"
+                                    placeholder="Min. 6 characters" required />
+                                <button type="button" class="pw-toggle" onclick="togglePw('signupPassword', this)"
+                                    aria-label="Show password">👁</button>
+                            </div>
+                        </div>
+                        <div class="auth-field">
+                            <label for="signupCollege">College <span class="optional">(optional)</span></label>
+                            <input type="text" id="signupCollege" class="auth-input" placeholder="IIT Bombay" />
+                        </div>
+                        <div class="auth-error" id="signupError"></div>
+                        <button type="submit" class="btn-primary auth-submit">Create Account →</button>
+                        <p class="auth-switch">Already have an account? <a href="#" onclick="switchAuthTab('login')">Log
+                                in</a></p>
+                    </form>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- TOAST -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
