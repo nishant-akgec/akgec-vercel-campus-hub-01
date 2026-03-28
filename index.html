@@ -227,40 +227,7 @@
             </div>
         </section>
 
-        <!-- LOGIN PAGE -->
-        <section class="page" id="page-auth">
-            <div class="auth-wrapper">
-                <div class="auth-card">
-                    <div class="auth-logo">
-                        <div class="logo-icon" style="width: 48px; height: 48px; font-size: 1.5rem;">📚</div>
-                        <span class="auth-brand">CampusHub</span>
-                    </div>
-                    <h2 style="margin-bottom: 1.5rem;">Welcome back!</h2>
-                    <form class="auth-form" onsubmit="handleLogin(event)">
-                        <div class="auth-field">
-                            <label for="authName">Full Name</label>
-                            <input type="text" id="authName" class="auth-input" placeholder="Enter your name"
-                                required />
-                        </div>
-                        <div class="auth-field">
-                            <label for="authEmail">Email Address</label>
-                            <input type="email" id="authEmail" class="auth-input" placeholder="you@university.edu"
-                                required />
-                        </div>
-                        <button type="submit" class="btn-primary auth-submit">Login</button>
-                    </form>
-                    <div
-                        style="margin-top: 2rem; border-top: 1px solid var(--slate-100); padding-top: 1.5rem; text-align: center;">
-                        <p style="font-size: .85rem; color: var(--slate-500); margin-bottom: 0.75rem;">Testing the
-                            moderation system?</p>
-                        <button class="nav-admin-link" style="margin: 0; padding: .6rem 1.25rem; font-size: .85rem;"
-                            onclick="document.getElementById('authEmail').value='admin@campushub.com'; document.getElementById('authName').value='Admin User';">
-                            Quick Login as Admin
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
+
 
         <!-- ADMIN PANEL -->
         <section class="page" id="page-admin">
@@ -436,6 +403,11 @@
 
     <!-- TOAST -->
     <div id="toast" class="toast"></div>
+
+    <!-- Firebase v9 Compat Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
     <script src="app.js"></script>
 </body>
