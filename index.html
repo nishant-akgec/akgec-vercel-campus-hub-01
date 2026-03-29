@@ -14,6 +14,13 @@
 </head>
 
 <body>
+    <!-- ── HANGING LAMP (DARK MODE TOGGLE) ── -->
+    <div class="lamp-container" id="lampToggle" onclick="toggleDarkMode()">
+        <div class="wire"></div>
+        <div class="lamp-shade"></div>
+        <div class="bulb"></div>
+        <div class="switch-string"></div>
+    </div>
 
     <!-- ── NAVBAR ── -->
     <nav class="navbar" id="navbar">
@@ -42,6 +49,7 @@
 
         <!-- HOME PAGE -->
         <section class="page active" id="page-home">
+            <div class="hero-overlay"></div>
             <div class="container hero-container minimal-mvp">
                 <div class="akgec-badge">Ajay Kumar Garg Engineering College, Ghaziabad</div>
                 <h1 class="hero-title">Find Notes for Your Semester</h1>
@@ -215,9 +223,14 @@
                                     placeholder="e.g. Chapter 1 – Intro" required />
                             </div>
                             <div class="field-group">
-                                <label for="upPdfLink">PDF / Resource Link</label>
-                                <input type="url" id="upPdfLink" class="text-input"
-                                    placeholder="https://example.com/notes.pdf" required />
+                                <label for="upPdfFile">Upload PDF/PNG File</label>
+                                <input type="file" id="upPdfFile" class="text-input" accept=".pdf,.png,.jpg,.jpeg"
+                                    style="padding: 0.5rem;" />
+                            </div>
+                            <div class="field-group">
+                                <label for="upDriveLink">OR Paste Drive/PDF Link</label>
+                                <input type="url" id="upDriveLink" class="text-input"
+                                    placeholder="https://drive.google.com/..." />
                             </div>
                         </div>
                         <button type="submit" class="btn-primary" style="width: 100%; margin-top: 1rem;">Upload
@@ -238,12 +251,27 @@
                             <h2 class="section-title">🛡️ Admin Dashboard</h2>
                             <p class="section-sub">Review and moderate pending note uploads.</p>
                         </div>
-                        <div class="akgec-badge">MODERATION QUEUE</div>
+                        <div class="akgec-badge-admin">MODERATION QUEUE</div>
                     </div>
                 </div>
+                <!-- Controls and Pending List -->
                 <div id="adminPendingList" class="admin-pending-list">
                     <!-- Pending notes injected by JS -->
                 </div>
+
+                <!-- ── DEVELOPER INFO (ADMIN ONLY) ── -->
+                <div class="app-footer"
+                    style="margin-top:2rem; padding: 2rem; background: var(--white); border-radius: 12px; border: 1px solid var(--slate-200);">
+                    <div class="container footer-content" style="padding:0">
+                        <p class="developer-credit">Built with ❤️ by <strong>Nishant Singh</strong></p>
+                        <div class="developer-contact">
+                            <a href="mailto:nishantsingh2206@gmail.com">nishantsingh2206@gmail.com</a>
+                            <span class="dot">·</span>
+                            <span>Mobile: 7505731055</span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -408,6 +436,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 
     <script src="app.js"></script>
 </body>

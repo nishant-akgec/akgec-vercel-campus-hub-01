@@ -16,6 +16,7 @@ if (!firebase.apps.length) {
 }
 const db = firebase.firestore();
 const auth = firebase.auth();
+const storage = firebase.storage();
 
 // ── STATE ─────────────────────────────────────────────────
 let currentPage = 'home';
@@ -154,6 +155,17 @@ function buildSubjectsPage() {
   document.getElementById('notesSubtitle').textContent = `${selectedFilters.branch || 'General'} · ${sem}`;
 }
 
+function filterSubjects() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const cards = document.querySelectorAll('.subject-card');
+  cards.forEach(card => {
+    const title = card.querySelector('.subject-title').textContent.toLowerCase();
+    const desc = card.querySelector('.subject-desc').textContent.toLowerCase();
+    if (title.includes(q) || desc.includes(q)) card.style.display = 'flex';
+    else card.style.display = 'none';
+  });
+}
+
 // ── SUBJECT / NOTES DETAIL PAGE ────────────────────────────
 function openSubject(id) {
   const subj = subjects.find(s => s.id === id);
@@ -178,8 +190,7 @@ async function renderNoteCards() {
   try {
     let querySnapshot = await db.collection('notes')
       .where('subject', '==', activeSubjectId)
-      .where('status', '==', 'approved')
-      .get();
+      .get(); // temporarily removed .where('status', '==', 'approved') for testing
 
     let allNotes = [];
     querySnapshot.forEach(doc => allNotes.push({ id: doc.id, ...doc.data() }));
@@ -400,25 +411,53 @@ async function handleUpload(e) {
   const title = document.getElementById('upTitle').value;
   const subjectId = document.getElementById('upSubject').value;
   const chapter = document.getElementById('upChapter').value;
-  const pdfLink = document.getElementById('upPdfLink').value;
+  let pdfLink = document.getElementById('upDriveLink').value.trim();
+  const fileInput = document.getElementById('upPdfFile');
+  const file = fileInput.files ? fileInput.files[0] : null;
+
+  if (!file && !pdfLink) {
+    return showToast('Please upload a file OR paste a link 📂');
+  }
+
+  const uploadBtn = document.querySelector('#uploadForm button[type="submit"]');
+  const originalText = uploadBtn.textContent;
+  uploadBtn.textContent = 'Submitting note... ⏳';
+  uploadBtn.disabled = true;
 
   try {
+    let sizeMb = 'Unknown';
+    if (file) {
+      uploadBtn.textContent = 'Uploading file... ⏳';
+      const storageRef = storage.ref(`notes/${Date.now()}_${file.name}`);
+      await storageRef.put(file);
+      pdfLink = await storageRef.getDownloadURL();
+      sizeMb = (file.size / (1024 * 1024)).toFixed(1) + ' MB';
+    } else if (pdfLink && !pdfLink.includes('http')) {
+      throw new Error('Please enter a valid HTTP link!');
+    }
+
+    // Save note entry inside Firestore
     await db.collection('notes').add({
       title, subject: subjectId, chapter, pdfLink,
       userId: currentUser.uid,
       by: currentUser.name,
       avatar: currentUser.initials,
-      downloads: 0, rating: 0, pages: 10, size: 'Unknown',
+      downloads: 0, rating: 0, pages: 10, size: sizeMb,
       tags: ['New'],
       createdAt: new Date().toISOString(),
-      status: 'pending' // Admin must approve
+      status: 'pending' // Admin must approve (temporarily showing all notes)
     });
 
+    console.log('Upload Success!', { title, subjectId, pdfLink });
     document.getElementById('uploadForm').reset();
-    showToast('Notes submitted for moderation! ⏳');
+    showToast('Note uploaded successfully ✅');
     navigateTo('home');
   } catch (err) {
+    console.error('Upload Error:', err);
     showToast('Upload failed: ' + err.message);
+  } finally {
+    uploadBtn.textContent = originalText;
+    uploadBtn.disabled = false;
   }
 }
 
@@ -429,27 +468,29 @@ async function buildAdminPanel() {
   container.innerHTML = `<div class="empty-state">Loading queue...</div>`;
 
   try {
-    const snaps = await db.collection('notes').where('status', '==', 'pending').get();
-    let pending = [];
-    snaps.forEach(d => pending.push({ id: d.id, ...d.data() }));
+    const snaps = await db.collection('notes').orderBy('createdAt', 'desc').get();
+    let allNotes = [];
+    snaps.forEach(d => allNotes.push({ id: d.id, ...d.data() }));
 
-    if (pending.length === 0) {
-      container.innerHTML = `<div class="empty-state">🎉 All caught up! No pending notes.</div>`;
+    if (allNotes.length === 0) {
+      container.innerHTML = `<div class="empty-state">🎉 No notes found in database.</div>`;
     } else {
-      container.innerHTML = pending.map(n => {
+      container.innerHTML = allNotes.map(n => {
         const subj = subjects.find(s => s.id === n.subject) || { title: 'Unknown', color: '#000' };
+        const isAppr = n.status === 'approved';
         return `
           <div class="admin-note-card">
               <div class="admin-note-header">
                   <div>
                       <span class="admin-subj-badge" style="background:${subj.color}20; color:${subj.color}">${subj.title}</span>
+                      <span class="status-chip ${n.status}" style="margin-left:8px;">${n.status}</span>
                       <div class="admin-note-title">${n.title}</div>
-                      <div class="admin-note-sub">${n.chapter} · By ${n.by}</div>
+                      <div class="admin-note-sub">${n.chapter} · By ${n.by} · ${fmtDate(n.createdAt)}</div>
                   </div>
                   <div class="admin-note-actions">
                       <button class="btn-approve" style="background:#f0f9ff; color:#0369a1; border-color:#bae6fd;" onclick="window.open('${n.pdfLink}', '_blank')">View</button>
-                      <button class="btn-approve" onclick="approveNote('${n.id}', '${n.userId}')">Approve</button>
-                      <button class="btn-reject" onclick="rejectNote('${n.id}')">Reject</button>
+                      ${!isAppr ? `<button class="btn-approve" onclick="approveNote('${n.id}', '${n.userId}')">Approve</button>` : ''}
+                      <button class="btn-reject" onclick="rejectNote('${n.id}')">Delete</button>
                   </div>
               </div>
           </div>
@@ -480,6 +521,24 @@ async function rejectNote(noteId) {
     showToast('Note rejected and deleted permanently. 🗑️');
     buildAdminPanel();
   } catch (err) { showToast('Error: ' + err.message); }
+}
+
+// ── DARK MODE ───────────────────────────────────────────
+function toggleDarkMode() {
+  const lamp = document.getElementById('lampToggle');
+  if (lamp) {
+    lamp.classList.add('pulling');
+    setTimeout(() => lamp.classList.remove('pulling'), 300);
+  }
+
+  document.body.classList.toggle('dark-mode');
+  const isDark = document.body.classList.contains('dark-mode');
+  localStorage.setItem('campushub_dark_mode', isDark);
+}
+
+// Init dark mode (default to true as requested)
+if (localStorage.getItem('campushub_dark_mode') !== 'false') {
+  document.body.classList.add('dark-mode');
 }
 
 document.addEventListener('DOMContentLoaded', () => { navigateTo('home'); });
