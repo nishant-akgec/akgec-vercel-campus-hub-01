@@ -1,2030 +1,497 @@
-/* ─── RESET & BASE ─────────────────────────────────────── */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
 
-:root {
-  --blue: #2563eb;
-  --blue-light: #3b82f6;
-  --blue-dark: #1d4ed8;
-  --blue-50: #eff6ff;
-  --blue-100: #dbeafe;
-  --slate-50: #f8fafc;
-  --slate-100: #f1f5f9;
-  --slate-200: #e2e8f0;
-  --slate-400: #94a3b8;
-  --slate-500: #64748b;
-  --slate-700: #334155;
-  --slate-900: #0f172a;
-  --white: #ffffff;
-  --radius: 14px;
-  --radius-sm: 8px;
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, .08), 0 1px 2px rgba(0, 0, 0, .05);
-  --shadow: 0 4px 16px rgba(0, 0, 0, .08), 0 2px 6px rgba(0, 0, 0, .05);
-  --shadow-lg: 0 10px 40px rgba(0, 0, 0, .12);
-  --transition: .22s cubic-bezier(.4, 0, .2, 1);
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: var(--slate-50);
-  color: var(--slate-900);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* ─── TYPOGRAPHY ───────────────────────────────────────── */
-h1,
-h2,
-h3 {
-  font-weight: 700;
-  letter-spacing: -.02em;
-  line-height: 1.15;
-}
-
-/* ─── NAVBAR ───────────────────────────────────────────── */
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(255, 255, 255, .88);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--slate-200);
-  padding: 0 1.5rem;
-  transition: box-shadow var(--transition);
-}
-
-.navbar.scrolled {
-  box-shadow: var(--shadow);
-}
-
-.nav-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 62px;
-}
-
-.nav-logo {
-  display: flex;
-  align-items: center;
-  gap: .55rem;
-  font-size: 1.22rem;
-  font-weight: 800;
-  color: var(--slate-900);
-  text-decoration: none;
-  letter-spacing: -.03em;
-}
-
-.logo-icon {
-  width: 34px;
-  height: 34px;
-  background: var(--blue);
-  border-radius: 9px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: .95rem;
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: .25rem;
-  align-items: center;
-}
-
-.nav-link {
-  text-decoration: none;
-  font-size: .875rem;
-  font-weight: 500;
-  color: var(--slate-500);
-  padding: .45rem .85rem;
-  border-radius: var(--radius-sm);
-  transition: all var(--transition);
-}
-
-.nav-link:hover {
-  color: var(--blue);
-  background: var(--blue-50);
-}
-
-.nav-link.active {
-  color: var(--blue);
-  background: var(--blue-100);
-  font-weight: 600;
-}
-
-/* hamburger */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 6px;
-}
-
-.hamburger span {
-  display: block;
-  width: 22px;
-  height: 2px;
-  background: var(--slate-700);
-  border-radius: 2px;
-  transition: all var(--transition);
-}
-
-/* ─── PAGES ─────────────────────────────────────────────── */
-.main-wrapper {
-  min-height: calc(100vh - 62px);
-}
-
-.page {
-  display: none;
-  animation: fadeSlide .35s var(--transition);
-}
-
-.page.active {
-  display: block;
-}
-
-@keyframes fadeSlide {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 2.5rem 1.5rem 4rem;
-}
-
-/* ─── HERO / HOME ───────────────────────────────────────── */
-#page-home {
-  background-image: url('bg.png');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  min-height: calc(100vh - 62px);
-  position: relative;
-}
-
-#page-home .hero-title {
-  color: white;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-}
-
-.akgec-badge {
-  display: inline-block;
-  background: rgba(37, 99, 235, 0.95);
-  color: #fff;
-  padding: 0.6rem 1.4rem;
-  font-weight: 700;
-  border-radius: 999px;
-  font-size: 0.95rem;
-  letter-spacing: 0.05em;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-  text-transform: uppercase;
-}
-
-#page-home .hero-sub {
-  color: #e2e8f0;
-}
-
-.hero-container {
-  position: relative;
-  text-align: center;
-}
-
-.hero-bg {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 0;
-}
-
-.hero-circle {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: .18;
-}
-
-.c1 {
-  width: 600px;
-  height: 600px;
-  background: #3b82f6;
-  top: -200px;
-  right: -100px;
-}
-
-.c2 {
-  width: 400px;
-  height: 400px;
-  background: #818cf8;
-  bottom: 0;
-  left: -100px;
-}
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: .4rem;
-  background: var(--blue-100);
-  color: var(--blue-dark);
-  font-size: .78rem;
-  font-weight: 600;
-  letter-spacing: .02em;
-  padding: .4rem 1rem;
-  border-radius: 99px;
-  margin-bottom: 1.5rem;
-}
-
-.hero-title {
-  font-size: clamp(2.2rem, 6vw, 3.6rem);
-  color: var(--slate-900);
-  margin-bottom: 1.1rem;
-  line-height: 1.1;
-}
-
-.gradient-text {
-  background: linear-gradient(135deg, var(--blue) 0%, #6366f1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hero-sub {
-  font-size: 1.05rem;
-  color: var(--slate-500);
-  max-width: 520px;
-  margin: 0 auto 2.5rem;
-  line-height: 1.7;
-}
-
-/* filter card */
-.filter-card {
-  background: var(--white);
-  border: 1px solid var(--slate-200);
-  border-radius: 20px;
-  box-shadow: var(--shadow-lg);
-  padding: 2rem;
-  max-width: 700px;
-  margin: 0 auto 2.5rem;
-  position: relative;
-  z-index: 1;
-}
-
-.filter-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.filter-group label {
-  display: block;
-  font-size: .8rem;
-  font-weight: 600;
-  color: var(--slate-500);
-  margin-bottom: .5rem;
-  letter-spacing: .03em;
-  text-transform: uppercase;
-}
-
-.select-wrapper {
-  position: relative;
-}
-
-.select-wrapper select {
-  width: 100%;
-  appearance: none;
-  background: var(--slate-50);
-  border: 1.5px solid var(--slate-200);
-  border-radius: var(--radius-sm);
-  padding: .65rem 2.2rem .65rem .85rem;
-  font-size: .9rem;
-  font-family: inherit;
-  color: var(--slate-900);
-  cursor: pointer;
-  transition: border-color var(--transition), box-shadow var(--transition);
-}
-
-.select-wrapper select:focus {
-  outline: none;
-  border-color: var(--blue-light);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, .15);
-}
-
-.select-arrow {
-  position: absolute;
-  right: .75rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--slate-400);
-  pointer-events: none;
-  font-size: .75rem;
-}
-
-/* buttons */
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: .6rem;
-  background: var(--blue);
-  color: var(--white);
-  font-size: .95rem;
-  font-weight: 600;
-  font-family: inherit;
-  border: none;
-  border-radius: var(--radius-sm);
-  padding: .8rem 1.8rem;
-  cursor: pointer;
-  transition: all var(--transition);
-  box-shadow: 0 4px 14px rgba(37, 99, 235, .35);
-}
-
-.btn-primary:hover {
-  background: var(--blue-dark);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, .45);
-  transform: translateY(-1px);
-}
-
-.btn-primary:active {
-  transform: translateY(0);
-}
-
-.btn-explore {
-  width: 100%;
-  justify-content: center;
-  padding: .9rem;
-}
-
-.btn-outline {
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  background: transparent;
-  color: var(--blue);
-  font-weight: 600;
-  font-size: .9rem;
-  font-family: inherit;
-  border: 1.5px solid var(--blue);
-  border-radius: var(--radius-sm);
-  padding: .7rem 1.5rem;
-  cursor: pointer;
-  transition: all var(--transition);
-}
-
-.btn-outline:hover {
-  background: var(--blue-50);
-}
-
-/* stats */
-.stats-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-
-.stat-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.stat-num {
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: var(--blue);
-}
-
-.stat-label {
-  font-size: .8rem;
-  color: var(--slate-400);
-  font-weight: 500;
-}
-
-.stat-divider {
-  width: 1px;
-  height: 36px;
-  background: var(--slate-200);
-}
-
-/* ─── NOTES PAGE ────────────────────────────────────────── */
-
-.page-header {
-  display: flex;
-  align-items: center;
-  gap: 1.2rem;
-  margin-bottom: 1.8rem;
-}
-
-.page-header-text h2 {
-  font-size: 1.6rem;
-}
-
-.page-header-text p {
-  font-size: .875rem;
-  color: var(--slate-500);
-  margin-top: .2rem;
-}
-
-.back-btn {
-  display: flex;
-  align-items: center;
-  gap: .4rem;
-  background: var(--white);
-  border: 1.5px solid var(--slate-200);
-  border-radius: var(--radius-sm);
-  padding: .55rem 1rem;
-  font-size: .875rem;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-  color: var(--slate-700);
-  transition: all var(--transition);
-  white-space: nowrap;
-}
-
-.back-btn:hover {
-  border-color: var(--blue);
-  color: var(--blue);
-  background: var(--blue-50);
-}
-
-/* search */
-.search-bar-wrap {
-  position: relative;
-  margin-bottom: 1.8rem;
-}
-
-.search-icon {
-  position: absolute;
-  left: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--slate-400);
-  pointer-events: none;
-}
-
-.search-bar {
-  width: 100%;
-  max-width: 440px;
-  background: var(--white);
-  border: 1.5px solid var(--slate-200);
-  border-radius: var(--radius-sm);
-  padding: .7rem 1rem .7rem 2.7rem;
-  font-size: .9rem;
-  font-family: inherit;
-  color: var(--slate-900);
-  transition: border-color var(--transition), box-shadow var(--transition);
-}
-
-.search-bar:focus {
-  outline: none;
-  border-color: var(--blue-light);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, .15);
-}
-
-/* subject grid */
-.subject-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.2rem;
-}
-
-.subject-card {
-  background: var(--white);
-  border: 1.5px solid var(--slate-200);
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  cursor: pointer;
-  transition: all var(--transition);
-  position: relative;
-  overflow: hidden;
-}
-
-.subject-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: var(--card-color, var(--blue));
-  border-radius: var(--radius) var(--radius) 0 0;
-}
-
-.subject-card:hover {
-  border-color: var(--blue-light);
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-3px);
-}
-
-.card-icon {
-  font-size: 2rem;
-  margin-bottom: .75rem;
-}
-
-.card-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--slate-900);
-  margin-bottom: .3rem;
-}
-
-.card-desc {
-  font-size: .82rem;
-  color: var(--slate-500);
-  margin-bottom: 1rem;
-  line-height: 1.5;
-}
-
-.card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.card-meta {
-  font-size: .78rem;
-  color: var(--slate-400);
-}
-
-.card-pill {
-  font-size: .72rem;
-  font-weight: 600;
-  background: var(--blue-100);
-  color: var(--blue-dark);
-  padding: .25rem .65rem;
-  border-radius: 99px;
-}
-
-/* ─── SUBJECT DETAIL ────────────────────────────────────── */
-.notes-list {
-  display: flex;
-  flex-direction: column;
-  gap: .85rem;
-}
-
-.note-item {
-  background: var(--white);
-  border: 1.5px solid var(--slate-200);
-  border-radius: var(--radius-sm);
-  padding: 1rem 1.2rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  cursor: pointer;
-  transition: all var(--transition);
-}
-
-.note-item:hover {
-  border-color: var(--blue-light);
-  box-shadow: var(--shadow);
-  transform: translateX(4px);
-}
-
-.note-thumb {
-  font-size: 1.6rem;
-  flex-shrink: 0;
-}
-
-.note-info {
-  flex: 1;
-}
-
-.note-title {
-  font-weight: 600;
-  font-size: .95rem;
-  color: var(--slate-900);
-}
-
-.note-subtitle {
-  font-size: .8rem;
-  color: var(--slate-400);
-  margin-top: .15rem;
-}
-
-.note-actions {
-  display: flex;
-  gap: .6rem;
-}
-
-.note-btn {
-  background: var(--blue-50);
-  color: var(--blue);
-  border: 1px solid var(--blue-100);
-  border-radius: var(--radius-sm);
-  padding: .4rem .9rem;
-  font-size: .8rem;
-  font-weight: 600;
-  font-family: inherit;
-  cursor: pointer;
-  transition: all var(--transition);
-}
-
-.note-btn:hover {
-  background: var(--blue);
-  color: var(--white);
-}
-
-/* ─── UPLOAD ────────────────────────────────────────────── */
-.upload-container {
-  max-width: 640px;
-}
-
-.section-title {
-  font-size: 1.7rem;
-  margin-bottom: .4rem;
-}
-
-.section-sub {
-  color: var(--slate-500);
-  font-size: .9rem;
-  margin-bottom: 2rem;
-}
-
-.upload-card {
-  background: var(--white);
-  border: 1.5px solid var(--slate-200);
-  border-radius: var(--radius);
-  padding: 2rem;
-  box-shadow: var(--shadow);
-}
-
-.upload-zone {
-  border: 2px dashed var(--slate-200);
-  border-radius: var(--radius-sm);
-  padding: 2.5rem;
-  text-align: center;
-  cursor: pointer;
-  transition: all var(--transition);
-  margin-bottom: 1rem;
-}
-
-.upload-zone:hover {
-  border-color: var(--blue-light);
-  background: var(--blue-50);
-}
-
-.upload-icon {
-  font-size: 2.5rem;
-  margin-bottom: .5rem;
-}
-
-.upload-hint {
-  font-weight: 600;
-  color: var(--slate-700);
-  margin-bottom: .3rem;
-}
-
-.upload-sub {
-  font-size: .85rem;
-  color: var(--slate-400);
-}
-
-.link-text {
-  color: var(--blue);
-  font-weight: 600;
-}
-
-.file-name {
-  font-size: .82rem;
-  color: var(--blue);
-  font-weight: 500;
-  min-height: 1.2rem;
-  margin-bottom: .8rem;
-}
-
-.upload-fields {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.field-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-.field-group label {
-  display: block;
-  font-size: .8rem;
-  font-weight: 600;
-  color: var(--slate-500);
-  margin-bottom: .4rem;
-  letter-spacing: .03em;
-  text-transform: uppercase;
-}
-
-.text-input {
-  width: 100%;
-  background: var(--slate-50);
-  border: 1.5px solid var(--slate-200);
-  border-radius: var(--radius-sm);
-  padding: .65rem .85rem;
-  font-size: .9rem;
-  font-family: inherit;
-  color: var(--slate-900);
-  transition: border-color var(--transition), box-shadow var(--transition);
-  appearance: none;
-}
-
-.text-input:focus {
-  outline: none;
-  border-color: var(--blue-light);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, .15);
-}
-
-/* ─── LEADERBOARD ───────────────────────────────────────── */
-.leaderboard-container {
-  max-width: 680px;
-}
-
-.podium-row {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 1rem;
-  margin-bottom: 2.5rem;
-}
-
-.podium-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: var(--white);
-  border: 1.5px solid var(--slate-200);
-  border-radius: var(--radius);
-  padding: 1.5rem 1.2rem;
-  flex: 1;
-  max-width: 180px;
-  box-shadow: var(--shadow-sm);
-  transition: transform var(--transition);
-}
-
-.podium-item:hover {
-  transform: translateY(-4px);
-}
-
-.podium-item.gold {
-  border-color: #fbbf24;
-  box-shadow: 0 4px 20px rgba(251, 191, 36, .2);
-}
-
-.podium-item.silver {
-  border-color: #94a3b8;
-}
-
-.podium-item.bronze {
-  border-color: #c26f21;
-}
-
-.podium-avatar {
-  width: 54px;
-  height: 54px;
-  background: linear-gradient(135deg, var(--blue), #6366f1);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 1rem;
-  color: white;
-  margin-bottom: .75rem;
-}
-
-.podium-item.gold .podium-avatar {
-  background: linear-gradient(135deg, #f59e0b, #fbbf24);
-}
-
-.podium-name {
-  font-weight: 700;
-  font-size: .9rem;
-}
-
-.podium-pts {
-  font-size: .82rem;
-  color: var(--slate-500);
-  margin: .2rem 0 .5rem;
-}
-
-.podium-rank {
-  font-size: .95rem;
-}
-
-.lb-list {
-  display: flex;
-  flex-direction: column;
-  gap: .75rem;
-}
-
-.lb-item {
-  background: var(--white);
-  border: 1.5px solid var(--slate-200);
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: .9rem 1.2rem;
-  transition: all var(--transition);
-}
-
-.lb-item:hover {
-  border-color: var(--blue-light);
-  transform: translateX(4px);
-}
-
-.lb-rank {
-  font-weight: 800;
-  font-size: 1rem;
-  color: var(--slate-400);
-  width: 28px;
-  text-align: center;
-}
-
-.lb-avatar {
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(135deg, var(--blue), #6366f1);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: .82rem;
-  color: white;
-  flex-shrink: 0;
-}
-
-.lb-info {
-  flex: 1;
-}
-
-.lb-name {
-  font-weight: 600;
-  font-size: .9rem;
-}
-
-.lb-college {
-  font-size: .78rem;
-  color: var(--slate-400);
-}
-
-.lb-pts {
-  font-weight: 700;
-  color: var(--blue);
-  font-size: .9rem;
-}
-
-/* ─── PROFILE ───────────────────────────────────────────── */
-.profile-container {
-  max-width: 640px;
-}
-
-.profile-hero {
-  text-align: center;
-  padding-bottom: 2rem;
-  border-bottom: 1.5px solid var(--slate-200);
-  margin-bottom: 1.8rem;
-}
-
-.profile-avatar-lg {
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(135deg, var(--blue), #6366f1);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 1.5rem;
-  color: white;
-  margin: 0 auto 1rem;
-  box-shadow: 0 6px 20px rgba(37, 99, 235, .3);
-}
-
-.profile-name {
-  font-size: 1.5rem;
-}
-
-.profile-college {
-  color: var(--slate-500);
-  font-size: .9rem;
-  margin: .3rem 0 1rem;
-}
-
-.profile-badges {
-  display: flex;
-  gap: .6rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.badge {
-  font-size: .78rem;
-  font-weight: 600;
-  background: var(--blue-100);
-  color: var(--blue-dark);
-  padding: .3rem .8rem;
-  border-radius: 99px;
-}
-
-.profile-stats {
-  display: flex;
-  justify-content: space-around;
-  background: var(--white);
-  border: 1.5px solid var(--slate-200);
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  box-shadow: var(--shadow-sm);
-}
-
-.pstat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.pstat-n {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--blue);
-}
-
-.pstat-l {
-  font-size: .78rem;
-  color: var(--slate-400);
-  font-weight: 500;
-  margin-top: .2rem;
-}
-
-.profile-section h3 {
-  font-size: 1.1rem;
-  margin-bottom: 1rem;
-}
-
-.recent-list {
-  display: flex;
-  flex-direction: column;
-  gap: .75rem;
-  margin-bottom: 2rem;
-}
-
-.recent-item {
-  background: var(--white);
-  border: 1.5px solid var(--slate-200);
-  border-radius: var(--radius-sm);
-  padding: .9rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: .9rem;
-  transition: all var(--transition);
-}
-
-.recent-item:hover {
-  border-color: var(--blue-light);
-  box-shadow: var(--shadow-sm);
-}
-
-.ri-icon {
-  font-size: 1.4rem;
-  flex-shrink: 0;
-}
-
-.ri-title {
-  font-weight: 600;
-  font-size: .9rem;
-}
-
-.ri-meta {
-  font-size: .78rem;
-  color: var(--slate-400);
-  margin-top: .1rem;
-}
-
-.ri-dls {
-  font-size: .82rem;
-  color: var(--blue);
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-/* ─── TOAST ─────────────────────────────────────────────── */
-.toast {
-  position: fixed;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%) translateY(120px);
-  background: var(--slate-900);
-  color: white;
-  padding: .8rem 1.6rem;
-  border-radius: 99px;
-  font-size: .875rem;
-  font-weight: 500;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
-  z-index: 999;
-  transition: transform .4s cubic-bezier(.34, 1.56, .64, 1);
-  white-space: nowrap;
-}
-
-.toast.show {
-  transform: translateX(-50%) translateY(0);
-}
-
-/* ─── RESPONSIVE ────────────────────────────────────────── */
-@media (max-width: 768px) {
-  .hamburger {
-    display: flex;
-  }
-
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 62px;
-    left: 0;
-    right: 0;
-    background: white;
-    border-bottom: 1px solid var(--slate-200);
-    padding: .75rem 1.5rem 1rem;
-    box-shadow: var(--shadow);
-    gap: .15rem;
-  }
-
-  .nav-links.open {
-    display: flex;
-  }
-
-  .nav-links li {
-    width: 100%;
-  }
-
-  .nav-link {
-    display: block;
-    padding: .7rem 1rem;
-  }
-
-  .navbar {
-    position: relative;
-  }
-
-  .filter-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .podium-row {
-    flex-wrap: nowrap;
-    gap: .6rem;
-  }
-
-  .podium-item {
-    padding: 1rem .75rem;
-  }
-
-  .field-row {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-title {
-    font-size: 2rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .container {
-    padding: 1.5rem 1rem 3rem;
-  }
-
-  .filter-card {
-    padding: 1.25rem;
-  }
-
-  .stats-row {
-    gap: 1.2rem;
-  }
-
-  .podium-item {
-    max-width: 120px;
-  }
-}
-
-/* ─── NOTES TOOLBAR ─────────────────────────────────────── */
-.notes-toolbar {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-bottom: 1.2rem;
-}
-
-.notes-search-wrap {
-  position: relative;
-  flex: 1;
-  min-width: 240px;
-}
-
-.notes-search-bar {
-  width: 100%;
-  background: var(--white);
-  border: 1.5px solid var(--slate-200);
-  border-radius: var(--radius-sm);
-  padding: .68rem 1rem .68rem 2.6rem;
-  font-size: .9rem;
-  font-family: inherit;
-  color: var(--slate-900);
-  transition: border-color var(--transition), box-shadow var(--transition);
-}
-
-.notes-search-bar:focus {
-  outline: none;
-  border-color: var(--blue-light);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, .15);
-}
-
-.sort-wrap {
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  flex-shrink: 0;
-}
-
-.sort-label {
-  font-size: .82rem;
-  font-weight: 600;
-  color: var(--slate-500);
-  white-space: nowrap;
-}
-
-.sort-select-wrapper {
-  min-width: 180px;
-}
-
-.sort-select {
-  width: 100%;
-  appearance: none;
-  background: var(--white);
-  border: 1.5px solid var(--slate-200);
-  border-radius: var(--radius-sm);
-  padding: .6rem 2.2rem .6rem .85rem;
-  font-size: .875rem;
-  font-family: inherit;
-  color: var(--slate-900);
-  cursor: pointer;
-  transition: border-color var(--transition), box-shadow var(--transition);
-}
-
-.sort-select:focus {
-  outline: none;
-  border-color: var(--blue-light);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, .15);
-}
-
-.note-result-count {
-  font-size: .8rem;
-  font-weight: 600;
-  color: var(--slate-400);
-  margin-bottom: 1rem;
-  letter-spacing: .02em;
-}
-
-/* ─── NOTE CARDS LIST ───────────────────────────────────── */
-.note-cards-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.note-card {
-  background: var(--white);
-  border: 1.5px solid var(--slate-200);
-  border-radius: var(--radius);
-  padding: 1.25rem 1.4rem;
-  display: flex;
-  gap: 1.1rem;
-  cursor: pointer;
-  transition: all var(--transition);
-  position: relative;
-}
-
-.note-card:hover {
-  border-color: var(--blue-light);
-  box-shadow: 0 6px 24px rgba(37, 99, 235, .1);
-  transform: translateY(-2px);
-}
-
-/* Left colored icon */
-.note-card-left {
-  flex-shrink: 0;
-}
-
-.note-card-icon {
-  width: 46px;
-  height: 46px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.3rem;
-  opacity: .9;
-}
-
-/* Body */
-.note-card-body {
-  flex: 1;
-  min-width: 0;
-}
-
-.note-card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: .75rem;
-  margin-bottom: .6rem;
-}
-
-.note-card-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--slate-900);
-  line-height: 1.3;
-  margin-bottom: .2rem;
-}
-
-.note-card-chapter {
-  font-size: .78rem;
-  color: var(--slate-500);
-  font-weight: 500;
-}
-
-/* Tags */
-.note-tags {
-  display: flex;
-  gap: .4rem;
-  flex-wrap: wrap;
-  flex-shrink: 0;
-}
-
-.note-tag {
-  font-size: .7rem;
-  font-weight: 700;
-  letter-spacing: .02em;
-  padding: .2rem .6rem;
-  border-radius: 99px;
-  background: var(--slate-100);
-  color: var(--slate-500);
-}
-
-.note-tag.tag-rated {
-  background: #fef9c3;
-  color: #854d0e;
-}
-
-.note-tag.tag-dl {
-  background: #dcfce7;
-  color: #166534;
-}
-
-/* Meta row */
-.note-card-meta {
-  display: flex;
-  align-items: center;
-  gap: .4rem;
-  flex-wrap: wrap;
-  margin-bottom: .85rem;
-}
-
-.note-dot {
-  color: var(--slate-300);
-  font-size: .8rem;
-}
-
-.note-info-item {
-  font-size: .78rem;
-  color: var(--slate-500);
-}
-
-/* Stars */
-.note-rating {
-  display: flex;
-  align-items: center;
-  gap: .3rem;
-}
-
-.stars-row {
-  font-size: .85rem;
-  letter-spacing: -.5px;
-  line-height: 1;
-}
-
-.star {
-  display: inline-block;
-}
-
-.star.full {
-  color: #f59e0b;
-}
-
-.star.half {
-  color: #f59e0b;
-}
-
-.star.empty {
-  color: #d1d5db;
-}
-
-.rating-num {
-  font-size: .8rem;
-  font-weight: 700;
-  color: var(--slate-700);
-}
-
-/* Footer */
-.note-card-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.note-by {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  font-size: .78rem;
-  color: var(--slate-500);
-}
-
-.note-avatar {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: .65rem;
-  font-weight: 800;
-  color: white;
-  flex-shrink: 0;
-}
-
-.note-date {
-  color: var(--slate-400);
-}
-
-/* Action buttons */
-.note-actions-row {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-}
-
-.btn-view-pdf {
-  display: inline-flex;
-  align-items: center;
-  gap: .4rem;
-  background: var(--blue);
-  color: white;
-  font-size: .8rem;
-  font-weight: 600;
-  font-family: inherit;
-  border: none;
-  border-radius: var(--radius-sm);
-  padding: .45rem 1rem;
-  cursor: pointer;
-  transition: all var(--transition);
-  box-shadow: 0 2px 8px rgba(37, 99, 235, .3);
-  white-space: nowrap;
-}
-
-.btn-view-pdf:hover {
-  background: var(--blue-dark);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, .4);
-  transform: translateY(-1px);
-}
-
-.btn-download-note {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  background: var(--slate-50);
-  color: var(--slate-500);
-  border: 1.5px solid var(--slate-200);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: all var(--transition);
-  flex-shrink: 0;
-}
-
-.btn-download-note:hover {
-  background: var(--blue-50);
-  color: var(--blue);
-  border-color: var(--blue-light);
-}
-
-/* ─── EMPTY STATE ───────────────────────────────────────── */
-.empty-state {
-  text-align: center;
-  padding: 3.5rem 1rem;
-  color: var(--slate-400);
-}
-
-.empty-icon {
-  font-size: 2.8rem;
-  margin-bottom: .75rem;
-}
-
-.empty-state p {
-  font-size: .95rem;
-  font-weight: 500;
-}
-
-/* ─── RESPONSIVE (notes page) ───────────────────────────── */
-@media (max-width: 640px) {
-  .notes-toolbar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .sort-wrap {
-    justify-content: flex-end;
-  }
-
-  .sort-select-wrapper {
-    flex: 1;
-  }
-
-  .note-card {
-    flex-direction: column;
-    gap: .75rem;
-  }
-
-  .note-card-top {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .note-card-footer {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: .6rem;
-  }
-
-  .note-actions-row {
-    width: 100%;
-  }
-
-  .btn-view-pdf {
-    flex: 1;
-    justify-content: center;
-  }
-
-  .note-card-meta {
-    gap: .35rem;
-  }
-}
-
-/* ─── AUTH PAGE ─────────────────────────────────────────── */
-.auth-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(100vh - 120px);
-  padding: 2rem;
-}
-
-.auth-card {
-  background: var(--white);
-  border: 1.5px solid var(--slate-200);
-  border-radius: var(--radius);
-  padding: 2.5rem;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: var(--shadow-lg);
-  text-align: center;
-}
-
-.auth-logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: .75rem;
-  margin-bottom: 2rem;
-}
-
-.auth-brand {
-  font-size: 1.5rem;
-  font-weight: 800;
-  letter-spacing: -.03em;
-}
-
-.auth-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  text-align: left;
-}
-
-.auth-field label {
-  display: block;
-  font-size: .85rem;
-  font-weight: 600;
-  color: var(--slate-700);
-  margin-bottom: .5rem;
-}
-
-.auth-input {
-  width: 100%;
-  padding: .75rem 1rem;
-  border: 1.5px solid var(--slate-200);
-  border-radius: var(--radius-sm);
-  font-family: inherit;
-  font-size: .95rem;
-  transition: all var(--transition);
-}
-
-.auth-input:focus {
-  outline: none;
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-}
-
-.auth-submit {
-  width: 100%;
-  padding: .85rem;
-  margin-top: .5rem;
-}
-
-/* Navbar Auth Styles */
-.nav-auth {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.nav-user-chip {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  background: var(--slate-100);
-  padding: .25rem .75rem .25rem .25rem;
-  border-radius: 99px;
-  font-size: .85rem;
-  font-weight: 600;
-}
-
-.nav-avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: .75rem;
-}
-
-.nav-logout-btn {
-  background: none;
-  border: none;
-  color: var(--slate-500);
-  font-size: .8rem;
-  font-weight: 600;
-  cursor: pointer;
-  padding: .4rem .6rem;
-  border-radius: var(--radius-sm);
-  transition: all var(--transition);
-  display: flex;
-  align-items: center;
-  gap: .3rem;
-}
-
-.nav-logout-btn:hover {
-  background: var(--slate-100);
-  color: var(--slate-900);
-}
-
-.nav-login-btn {
-  background: var(--blue);
-  color: white;
-  border: none;
-  padding: .5rem 1.25rem;
-  border-radius: var(--radius-sm);
-  font-weight: 600;
-  font-size: .85rem;
-  cursor: pointer;
-  transition: all var(--transition);
-}
-
-.nav-login-btn:hover {
-  background: var(--blue-dark);
-}
-
-/* 🛡️ ADMIN STYLES */
-.nav-admin-link {
-  background: #fffbeb;
-  color: #92400e;
-  border: 1px solid #fde68a;
-  padding: .4rem .9rem;
-  border-radius: var(--radius-sm);
-  font-size: .8rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .02em;
-  cursor: pointer;
-  transition: all var(--transition);
-  margin-right: 0.5rem;
-}
-
-.nav-admin-link:hover {
-  background: #fef3c7;
-}
-
-.admin-container {
-  max-width: 800px;
-  padding-bottom: 5rem;
-}
-
-.admin-pending-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.admin-note-card {
-  background: white;
-  border: 1.5px solid var(--slate-200);
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  box-shadow: var(--shadow-sm);
-}
-
-.admin-note-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1rem;
-}
-
-.admin-subj-badge {
-  display: inline-block;
-  font-size: .7rem;
-  font-weight: 700;
-  padding: .25rem .75rem;
-  border-radius: 99px;
-  margin-bottom: .75rem;
-  text-transform: uppercase;
-}
-
-.admin-note-title {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--slate-900);
-}
-
-.admin-note-sub {
-  font-size: .85rem;
-  color: var(--slate-500);
-  margin-top: .35rem;
-}
-
-.admin-note-actions {
-  display: flex;
-  gap: .75rem;
-}
-
-.btn-approve,
-.btn-reject {
-  padding: .6rem 1.25rem;
-  border-radius: var(--radius-sm);
-  font-size: .9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--transition);
-  border: 1.5px solid transparent;
-}
-
-.btn-approve {
-  background: #ecfdf5;
-  color: #059669;
-  border-color: #10b98130;
-}
-
-.btn-approve:hover {
-  background: #059669;
-  color: white;
-}
-
-.btn-reject {
-  background: #fef2f2;
-  color: #dc2626;
-  border-color: #ef444430;
-}
-
-.btn-reject:hover {
-  background: #dc2626;
-  color: white;
-}
-
-
-/* ─── MVP SIMPLIFICATION ─────────────────────────────────── */
-.minimal-mvp {
-  text-align: center;
-  padding-top: 5rem !important;
-}
-
-.akgec-badge {
-  background: var(--blue-50);
-  color: var(--blue-700);
-  font-weight: 700;
-  font-size: .85rem;
-  padding: .5rem 1.25rem;
-  border-radius: 99px;
-  display: inline-block;
-  margin-bottom: 1.5rem;
-  border: 1.5px solid var(--blue-100);
-}
-
-.hero-container.minimal-mvp .hero-title {
-  font-size: 2.75rem;
-  color: var(--slate-900);
-  margin-bottom: .5rem;
-  font-weight: 800;
-}
-
-.hero-container.minimal-mvp .hero-sub {
-  font-size: 1.15rem;
-  color: var(--slate-500);
-  margin-bottom: 2.5rem;
-}
-
-.filter-card.minimal {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 1.25rem;
-  box-shadow: var(--shadow-sm);
-  border-radius: var(--radius);
-}
-
-.filter-fields-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  text-align: left;
-}
-
-.hero-btn-mvp {
-  width: 100%;
-  padding: .8rem;
-  font-size: 1rem;
-  font-weight: 700;
-  border-radius: var(--radius-sm);
-  background: var(--blue);
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: all var(--transition);
-}
-
-.hero-btn-mvp:hover {
-  background: var(--blue-dark);
-  transform: translateY(-2px);
-}
-
-@media (max-width: 640px) {
-  .filter-fields-row {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-container.minimal-mvp .hero-title {
-    font-size: 2rem;
-  }
-}
-
-.status-chip {
-  font-size: .75rem;
-  font-weight: 700;
-  padding: .2rem .6rem;
-  border-radius: 99px;
-  text-transform: capitalize;
-}
-
-.status-chip.approved {
-  background: #f0fdf4;
-  color: #16a34a;
-}
-
-.status-chip.pending {
-  background: #fffbeb;
-  color: #d97706;
-}
-
-.status-chip.rejected {
-  background: #fef2f2;
-  color: #dc2626;
-}
-
-/* ─── FOOTER ───────────────────────────────────────────── */
-.app-footer {
-  text-align: center;
-  padding: 3rem 1.5rem;
-  background: var(--white);
-  border-top: 1px solid var(--slate-200);
-  margin-top: 4rem;
-}
-
-.footer-content p {
-  color: var(--slate-700);
-  font-size: 0.95rem;
-  margin-bottom: 0.5rem;
-}
-
-.footer-content .developer-contact {
-  color: var(--slate-500);
-  font-size: 0.85rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-}
-
-.footer-content a {
-  color: var(--blue);
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.65);
-  z-index: 0;
-}
-
-#page-home .hero-container {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-}
-
-/* ─── DARK MODE ────────────────────────────────────────── */
-body.dark-mode {
-  --slate-50: #0f172a;
-  --slate-100: #1e293b;
-  --slate-200: #334155;
-  --slate-400: #94a3b8;
-  --slate-500: #cbd5e1;
-  --slate-700: #e2e8f0;
-  --slate-900: #f8fafc;
-  --white: #1e293b;
-  --card-color: #3b82f6;
-  background: var(--slate-50);
-  color: var(--slate-900);
-}
-
-body.dark-mode .navbar {
-  background: rgba(30, 41, 59, 0.88);
-  border-bottom: 1px solid var(--slate-200);
-}
-
-body.dark-mode .nav-logo {
-  color: var(--slate-900);
-}
-
-body.dark-mode .nav-link {
-  color: var(--slate-500);
-}
-
-body.dark-mode .nav-link:hover {
-  color: var(--blue-light);
-  background: rgba(59, 130, 246, 0.1);
-}
-
-body.dark-mode .text-input,
-body.dark-mode select {
-  background: var(--slate-100);
-  color: var(--slate-900);
-}
-
-body.dark-mode .filter-card {
-  background: var(--slate-100);
-  border-color: var(--slate-200);
-}
-
-/* ─── LAMP ANIMATION ───────────────────────────────────── */
-.lamp-container {
-  position: fixed;
-  top: 0;
-  right: 3%;
-  width: 50px;
-  height: 100px;
-  z-index: 9999;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transform-origin: top center;
-  animation: swing 4s ease-in-out infinite alternate;
-}
-
-.wire {
-  width: 3px;
-  height: 40px;
-  background: #333;
-}
-
-.lamp-shade {
-  width: 40px;
-  height: 25px;
-  background: #444;
-  border-radius: 20px 20px 0 0;
-  position: relative;
-}
-
-.bulb {
-  width: 22px;
-  height: 22px;
-  background: #fffbeb;
-  border-radius: 50%;
-  box-shadow: 0 0 15px rgba(251, 191, 36, 0.8), 0 0 30px rgba(251, 191, 36, 0.5);
-  transition: all 0.3s ease;
-  position: relative;
-  top: -5px;
-  z-index: -1;
-}
-
-.switch-string {
-  width: 2px;
-  height: 40px;
-  background: repeating-linear-gradient(#fca5a5, #fca5a5 3px, #fff 3px, #fff 6px);
-  transition: height 0.2s;
-  position: absolute;
-  right: 12px;
-  top: 60px;
-}
-
-.lamp-container:active .switch-string {
-  height: 50px;
-}
-
-@keyframes swing {
-  0% {
-    transform: rotate(3deg);
-  }
-
-  100% {
-    transform: rotate(-3deg);
-  }
-}
-
-body:not(.dark-mode) .bulb {
-  background: #333;
-  box-shadow: none;
-}
-
-body.dark-mode .wire {
-  background: #111;
-}
-
-body.dark-mode .lamp-shade {
-  background: #222;
-}
-
-.lamp-container.pulling .switch-string {
-  height: 90px;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CampX Notes – For Students, By Students</title>
+  <meta name="description" content="Find and share notes across all colleges in India. The ultimate student platform for B.Tech, BCA, MCA and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="dark-mode">
+  <!-- ── LAMP TOGGLE ── -->
+  <div class="lamp-wrap" id="lampToggle" onclick="toggleDarkMode()" title="Toggle theme">
+    <div class="lamp-wire"></div>
+    <div class="lamp-head">
+      <div class="lamp-bulb" id="lampBulb"></div>
+    </div>
+    <div class="lamp-string" id="lampString"></div>
+  </div>
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="#" onclick="navigateTo('home')">
+        <div class="logo-mark">C<sup>X</sup></div>
+        <span>CampX Notes</span>
+      </a>
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#" class="nav-link active" id="nav-home" onclick="navigateTo('home')">Home</a></li>
+        <li><a href="#" class="nav-link" id="nav-upload" onclick="guardedNavigate('upload')">Upload</a></li>
+        <li><a href="#" class="nav-link" id="nav-leaderboard" onclick="navigateTo('leaderboard')">Leaderboard</a></li>
+        <li><a href="#" class="nav-link" id="nav-community" onclick="navigateTo('community')">💬 Community</a></li>
+        <li><a href="#" class="nav-link" id="nav-profile" onclick="guardedNavigate('profile')">Profile</a></li>
+        <li><a href="#" class="nav-link premium-link" id="nav-premium" onclick="navigateTo('premium')">⚡ Premium</a></li>
+      </ul>
+      <div class="nav-auth" id="navAuth"></div>
+    </div>
+  </nav>
+  <!-- ── MAIN ── -->
+  <main class="main-wrapper">
+    <!-- HOME PAGE -->
+    <section class="page active" id="page-home">
+      <div class="hero-section">
+        <!-- College BG Image with overlay -->
+        <div class="hero-bg-img"></div>
+        <div class="hero-particles" id="heroParticles"></div>
+        <div class="hero-glow g1"></div>
+        <div class="hero-glow g2"></div>
+        <div class="hero-content">
+          <div class="hero-badge">🎓 India's #1 Student Notes Platform</div>
+          
+          <!-- Google-Style Search (Mid Upside) -->
+          <div class="hero-search-wrap google-style-search">
+            <svg class="search-icon-hero" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="text" id="heroSearch" class="hero-search" placeholder="Search by College, Branch, Semester..." oninput="handleHeroSearch()" autocomplete="off" />
+            <div class="search-dropdown" id="searchDropdown"></div>
+          </div>
+          <h1 class="hero-title">For Students,<br><span class="gradient-text">By Students</span></h1>
+          <p class="hero-sub">Find, share, and discover notes from students across all colleges in India. B.Tech, BCA, MCA and more.</p>
+          <!-- CTA Buttons -->
+          <div class="hero-btns">
+            <button class="btn-get-started" onclick="navigateTo('explore')">
+              Get Started
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <button class="btn-premium-hero" onclick="navigateTo('premium')">
+              ⚡ Buy Premium
+            </button>
+          </div>
+          <!-- Stats -->
+          <div class="hero-stats">
+            <div class="hstat"><span class="hstat-n" id="statNotes">2,400+</span><span class="hstat-l">Notes Shared</span></div>
+            <div class="hstat-div"></div>
+            <div class="hstat"><span class="hstat-n" id="statUsers">1,200+</span><span class="hstat-l">Students</span></div>
+            <div class="hstat-div"></div>
+            <div class="hstat"><span class="hstat-n">500+</span><span class="hstat-l">Colleges</span></div>
+            <div class="hstat-div"></div>
+            <div class="hstat"><span class="hstat-n">100+</span><span class="hstat-l">Cities</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- Recent Notes Section -->
+      <div class="container section-gap">
+        <div class="section-header">
+          <h2 class="section-heading">Recently Uploaded</h2>
+          <button class="btn-link" onclick="navigateTo('explore')">View all →</button>
+        </div>
+        <div class="recent-notes-grid" id="recentNotesGrid">
+          <div class="notes-loading">Loading recent notes...</div>
+        </div>
+      </div>
+      <!-- How it works -->
+      <div class="container section-gap">
+        <h2 class="section-heading center">How It Works</h2>
+        <div class="steps-grid">
+          <div class="step-card"><div class="step-num">1</div><div class="step-icon">🏫</div><h3>Select College</h3><p>Choose your college from hundreds of institutes across India.</p></div>
+          <div class="step-card"><div class="step-num">2</div><div class="step-icon">📚</div><h3>Pick Subject</h3><p>Select your course, branch, and semester to find relevant subjects.</p></div>
+          <div class="step-card"><div class="step-num">3</div><div class="step-icon">📄</div><h3>Get Notes</h3><p>Browse notes uploaded by fellow students and download instantly.</p></div>
+          <div class="step-card"><div class="step-num">4</div><div class="step-icon">⬆️</div><h3>Share Back</h3><p>Upload your own notes and help others while earning points.</p></div>
+        </div>
+      </div>
+    </section>
+    <!-- EXPLORE PAGE (College/Branch/Semester Selector) -->
+    <section class="page" id="page-explore">
+      <div class="container explore-container">
+        <div class="explore-hero">
+          <h2>Find Your Notes</h2>
+          <p>Select your college, course, branch and semester to get started</p>
+        </div>
+        <div class="selector-card" id="selectorCard">
+          <div class="selector-steps">
+            <div class="sel-step active" id="sstep-1">1. College</div>
+            <div class="sel-step" id="sstep-2">2. Course</div>
+            <div class="sel-step" id="sstep-3">3. Branch</div>
+            <div class="sel-step" id="sstep-4">4. Semester</div>
+          </div>
+          <!-- Step 1: College -->
+          <div class="sel-panel active" id="sel-1">
+            <h3>Select Your College</h3>
+            <div class="college-search-wrap">
+              <input type="text" id="collegeSearch" class="sel-input" placeholder="Type to search college..." oninput="filterColleges()" />
+            </div>
+            <div class="college-list" id="collegeList"></div>
+          </div>
+          <!-- Step 2: Course -->
+          <div class="sel-panel" id="sel-2">
+            <button class="back-sel" onclick="goSelStep(1)">← Back</button>
+            <h3>Select Course</h3>
+            <div class="options-grid" id="courseList"></div>
+          </div>
+          <!-- Step 3: Branch -->
+          <div class="sel-panel" id="sel-3">
+            <button class="back-sel" onclick="goSelStep(2)">← Back</button>
+            <h3>Select Branch</h3>
+            <div class="options-grid" id="branchList"></div>
+          </div>
+          <!-- Step 4: Semester -->
+          <div class="sel-panel" id="sel-4">
+            <button class="back-sel" onclick="goSelStep(3)">← Back</button>
+            <h3>Select Semester</h3>
+            <div class="sem-grid" id="semGrid"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SUBJECTS PAGE -->
+    <section class="page" id="page-subjects">
+      <div class="container">
+        <div class="page-header-bar">
+          <button class="back-btn" onclick="navigateTo('explore')">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back
+          </button>
+          <div>
+            <h2 id="subjectsPageTitle">Subjects</h2>
+            <p id="subjectsPageMeta" class="page-meta"></p>
+          </div>
+        </div>
+        <div class="subject-grid" id="subjectGrid"></div>
+      </div>
+    </section>
+    <!-- NOTES LIST PAGE -->
+    <section class="page" id="page-notes">
+      <div class="container">
+        <div class="page-header-bar">
+          <button class="back-btn" onclick="navigateTo('subjects')">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back
+          </button>
+          <div>
+            <h2 id="notesPageTitle">Notes</h2>
+            <p id="notesPageMeta" class="page-meta"></p>
+          </div>
+        </div>
+        <div class="notes-toolbar">
+          <div class="notes-search-wrap">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="text" id="noteSearchInput" class="notes-search" placeholder="Search notes..." oninput="onNotesSearch()" />
+          </div>
+          <div class="select-wrap">
+            <select id="notesSortSelect" class="sort-sel" onchange="onNotesSort()">
+              <option value="latest">🕐 Latest</option>
+              <option value="top">⭐ Top Rated</option>
+              <option value="downloads">⬇ Most Downloaded</option>
+            </select>
+          </div>
+        </div>
+        <div class="result-count" id="noteResultCount"></div>
+        <div class="notes-list" id="notesList"></div>
+      </div>
+    </section>
+    <!-- UPLOAD PAGE -->
+    <section class="page" id="page-upload">
+      <div class="container upload-container">
+        <h2 class="page-title">📤 Upload Notes</h2>
+        <p class="page-sub">Share your knowledge. Top contributors earn badges and points!</p>
+        <div class="upload-card">
+          <form id="uploadForm" onsubmit="handleUpload(event)">
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Note Title *</label>
+                <input type="text" id="upTitle" class="form-input" placeholder="e.g. OS Unit 2 – Process Scheduling" required />
+              </div>
+              <div class="form-group">
+                <label>College *</label>
+                <input type="text" id="upCollege" class="form-input" placeholder="e.g. AKGEC Ghaziabad" required />
+              </div>
+              <div class="form-group">
+                <label>Course *</label>
+                <select id="upCourse" class="form-input" required>
+                  <option value="">Select Course</option>
+                  <option>B.Tech</option>
+                  <option>BCA</option>
+                  <option>MCA</option>
+                  <option>B.Sc</option>
+                  <option>MBA</option>
+                  <option>Diploma</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Branch *</label>
+                <select id="upBranch" class="form-input" required>
+                  <option value="">Select Branch</option>
+                  <option>CSE</option>
+                  <option>CSE (AI & ML)</option>
+                  <option>CSE (Data Science)</option>
+                  <option>IT</option>
+                  <option>ECE</option>
+                  <option>ME</option>
+                  <option>Civil</option>
+                  <option>EE</option>
+                  <option>Chemical</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Semester *</label>
+                <select id="upSemester" class="form-input" required>
+                  <option value="">Select Semester</option>
+                  <option>Semester 1</option><option>Semester 2</option>
+                  <option>Semester 3</option><option>Semester 4</option>
+                  <option>Semester 5</option><option>Semester 6</option>
+                  <option>Semester 7</option><option>Semester 8</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Subject *</label>
+                <input type="text" id="upSubject" class="form-input" placeholder="e.g. Operating Systems" required />
+              </div>
+              <div class="form-group full">
+                <label>Chapter / Topic</label>
+                <input type="text" id="upChapter" class="form-input" placeholder="e.g. Chapter 3 – Memory Management" />
+              </div>
+              <div class="form-group full">
+                <label>Upload PDF / Image File</label>
+                <div class="file-drop-zone" id="fileDropZone" onclick="document.getElementById('upFile').click()">
+                  <div class="fdz-icon">📁</div>
+                  <p class="fdz-text">Click to upload or drag & drop</p>
+                  <p class="fdz-sub">PDF, PNG, JPG (max 20MB)</p>
+                  <input type="file" id="upFile" accept=".pdf,.png,.jpg,.jpeg" style="display:none" onchange="onFileSelect(this)" />
+                </div>
+                <div class="file-chosen" id="fileChosen"></div>
+              </div>
+              <div class="form-group full">
+                <label>OR Paste Link (Google Drive / PDF URL)</label>
+                <input type="url" id="upLink" class="form-input" placeholder="https://drive.google.com/..." />
+              </div>
+            </div>
+            <button type="submit" class="btn-primary full-w" id="uploadBtn">Upload Notes</button>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- AUTH PAGE -->
+    <section class="page" id="page-auth">
+      <div class="auth-wrapper">
+        <div class="auth-card">
+          <div class="auth-logo">
+            <div class="logo-mark sm">C<sup>X</sup></div>
+            <span>CampX Notes</span>
+          </div>
+          <div class="auth-tabs">
+            <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Log In</button>
+            <button class="auth-tab" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+          </div>
+          <!-- Login -->
+          <form class="auth-form active" id="form-login" onsubmit="handleLogin(event)" novalidate>
+            <div class="auth-field">
+              <label>Email</label>
+              <input type="email" id="loginEmail" class="auth-input" placeholder="you@college.edu" required />
+            </div>
+            <div class="auth-field">
+              <label>Password</label>
+              <div class="pw-wrap">
+                <input type="password" id="loginPassword" class="auth-input" placeholder="••••••••" required />
+                <button type="button" class="pw-eye" onclick="togglePw('loginPassword',this)">👁</button>
+              </div>
+            </div>
+            <div class="auth-error" id="loginError"></div>
+            <button type="submit" class="btn-primary full-w">Log In →</button>
+            <div class="auth-or"><span>or</span></div>
+            <button type="button" class="btn-google" onclick="handleGoogleLogin()">
+              <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.29-8.16 2.29-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+              Continue with Google
+            </button>
+            <p class="auth-switch">New here? <a href="#" onclick="switchTab('signup')">Sign up</a></p>
+          </form>
+          <!-- Signup -->
+          <form class="auth-form" id="form-signup" onsubmit="handleSignup(event)" novalidate>
+            <div class="auth-field">
+              <label>Full Name</label>
+              <input type="text" id="signupName" class="auth-input" placeholder="Rahul Sharma" required />
+            </div>
+            <div class="auth-field">
+              <label>Email</label>
+              <input type="email" id="signupEmail" class="auth-input" placeholder="you@college.edu" required />
+            </div>
+            <div class="auth-field">
+              <label>Password</label>
+              <div class="pw-wrap">
+                <input type="password" id="signupPassword" class="auth-input" placeholder="Min 6 characters" required />
+                <button type="button" class="pw-eye" onclick="togglePw('signupPassword',this)">👁</button>
+              </div>
+            </div>
+            <div class="auth-field">
+              <label>College <span class="opt">(optional)</span></label>
+              <input type="text" id="signupCollege" class="auth-input" placeholder="Your College Name" />
+            </div>
+            <div class="auth-error" id="signupError"></div>
+            <button type="submit" class="btn-primary full-w">Create Account →</button>
+            <div class="auth-or"><span>or</span></div>
+            <button type="button" class="btn-google" onclick="handleGoogleLogin()">
+              <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.29-8.16 2.29-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+              Continue with Google
+            </button>
+            <p class="auth-switch">Already have an account? <a href="#" onclick="switchTab('login')">Log in</a></p>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- LEADERBOARD PAGE -->
+    <section class="page" id="page-leaderboard">
+      <div class="container lb-container">
+        <h2 class="page-title">🏆 Leaderboard</h2>
+        <p class="page-sub">Top contributors this month. Upload notes to earn points!</p>
+        <div class="lb-list" id="lbList"><div class="notes-loading">Loading...</div></div>
+      </div>
+    </section>
+    <!-- PROFILE PAGE -->
+    <section class="page" id="page-profile">
+      <div class="container" id="profileContainer"></div>
+    </section>
+    <!-- PREMIUM PAGE -->
+    <section class="page" id="page-premium">
+      <div class="container premium-container">
+        <div class="premium-hero">
+          <div class="premium-badge">⚡ PREMIUM</div>
+          <h2>Unlock CampX Premium</h2>
+          <p>Get access to exclusive notes, ad-free experience, and priority support.</p>
+        </div>
+        <div class="plans-grid">
+          <div class="plan-card free">
+            <div class="plan-name">Free</div>
+            <div class="plan-price">₹0 <span>/month</span></div>
+            <ul class="plan-features">
+              <li>✓ Access public notes</li>
+              <li>✓ Upload up to 5 notes/month</li>
+              <li>✓ Basic search</li>
+              <li class="no">✗ Top-rated curated notes</li>
+              <li class="no">✗ Ad-free experience</li>
+              <li class="no">✗ Priority upload review</li>
+            </ul>
+            <button class="btn-plan" onclick="navigateTo('auth')">Get Started Free</button>
+          </div>
+          <div class="plan-card premium popular">
+            <div class="popular-label">Most Popular</div>
+            <div class="plan-name">Premium</div>
+            <div class="plan-price">₹49 <span>/month</span>
+              <div class="plan-free-note">⚡ 100 pts = 1 month FREE!</div>
+            </div>
+            <ul class="plan-features">
+              <li>✓ Everything in Free</li>
+              <li>✓ Unlimited uploads</li>
+              <li>✓ Access 5★ Top-rated notes</li>
+              <li>✓ Community section access</li>
+              <li>✓ Ad-free experience</li>
+              <li>✓ Priority review (24hr)</li>
+              <li>✓ Premium badge on profile</li>
+            </ul>
+            <button class="btn-plan premium" onclick="showToast('Premium launching soon! 🚀')">Coming Soon – ₹49/mo</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ADMIN PAGE -->
+    <section class="page" id="page-admin">
+      <div class="container">
+        <div class="admin-header-bar">
+          <div>
+            <h2 class="page-title">🛡️ Admin Panel</h2>
+            <p class="page-sub">Manage all notes uploaded by students</p>
+          </div>
+          <div style="display:flex;gap:1rem;align-items:center">
+            <button class="btn-link" onclick="buildAdmin()">🔄 Refresh</button>
+            <div class="admin-filters">
+            <button class="filter-btn active" onclick="adminFilter('all', this)">All</button>
+            <button class="filter-btn" onclick="adminFilter('pending', this)">Pending</button>
+            <button class="filter-btn" onclick="adminFilter('approved', this)">Approved</button>
+          </div>
+        </div>
+        <p class="admin-summary" id="adminSummary"></p>
+        <div id="adminList"></div>
+        <!-- Dev Info -->
+        <div class="dev-card">
+          <p>Built with ❤️ by <strong>Nishant Singh</strong></p>
+          <div class="dev-links">
+            <a href="mailto:nishantsingh2206@gmail.com">nishantsingh2206@gmail.com</a>
+            <span>·</span>
+            <span>📞 7505731055</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- COMMUNITY PAGE -->
+    <section class="page" id="page-community">
+      <div class="container comm-container">
+        <h2 class="page-title">💬 Student Community</h2>
+        <p class="page-sub">Ask doubts, share queries, connect with students across India</p>
+        <!-- Post Form -->
+        <div class="comm-post-form-wrap">
+          <form id="commForm" onsubmit="postToComm(event)">
+            <div class="form-grid">
+              <div class="form-group full">
+                <textarea id="commMsg" class="form-input comm-textarea" placeholder="Ask your doubt, share a tip, or post a query..." rows="3" required></textarea>
+              </div>
+              <div class="form-group">
+                <label>Type</label>
+                <select id="commType" class="form-input">
+                  <option value="doubt">🙋 Doubt</option>
+                  <option value="query">❓ Query</option>
+                  <option value="tip">💡 Tip</option>
+                  <option value="discussion">🗣️ Discussion</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Subject (optional)</label>
+                <input type="text" id="commSubject" class="form-input" placeholder="e.g. Operating Systems" />
+              </div>
+            </div>
+            <button type="submit" class="btn-primary" id="commPostBtn" style="margin-top:.5rem">📤 Post</button>
+          </form>
+        </div>
+        <!-- Feed -->
+        <div id="commFeed"><div class="notes-loading">⏳ Loading...</div></div>
+      </div>
+    </section>
+  </main>
+  <!-- SITE FOOTER -->
+  <footer class="site-footer" id="mainFooter">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo-mark sm">C<sup>X</sup></div>
+        <div>
+          <div class="footer-name">CampX Notes</div>
+          <div class="footer-tag">For Students, By Students</div>
+        </div>
+      </div>
+      <div class="footer-links">
+        <button onclick="navigateTo('home')" class="fl">Home</button>
+        <button onclick="navigateTo('explore')" class="fl">Explore</button>
+        <button onclick="navigateTo('leaderboard')" class="fl">Leaderboard</button>
+        <button onclick="navigateTo('community')" class="fl">Community</button>
+        <button onclick="navigateTo('premium')" class="fl">Premium</button>
+      </div>
+      <div class="footer-contact">
+        <div class="fc-line">📧 <a href="mailto:nishantsingh2206@gmail.com">nishantsingh2206@gmail.com</a></div>
+        <div class="fc-line">📞 +91 7505731055</div>
+        <div class="fc-line">📍 Bulandshahr, Uttar Pradesh – 203205</div>
+      </div>
+    </div>
+    <div class="footer-copy">
+      &copy; 2025 CampX Notes. All Rights Reserved. | Built with ❤️ by <strong>Nishant Singh</strong>
+    </div>
+  </footer>
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
