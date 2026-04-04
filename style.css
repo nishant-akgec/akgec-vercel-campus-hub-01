@@ -382,7 +382,7 @@ body.light-mode .lamp-bulb{background:#ccc;box-shadow:none}
 .hero-bg-img {
   position: absolute;
   inset: 0;
-  background: url('college-bg.png') center/cover no-repeat;
+  background: url('bg.png') center/cover no-repeat;
   z-index: 0;
 }
 .hero-bg-img::after {
@@ -599,7 +599,7 @@ body.light-mode .lamp-bulb{background:#ccc;box-shadow:none}
 .hero-bg-img {
   position: absolute;
   inset: 0;
-  background-image: url('college-bg.png');
+  background-image: url('bg.png');
   background-size: cover;
   background-position: center;
   opacity: 0.4;
