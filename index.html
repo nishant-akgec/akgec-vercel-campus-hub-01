@@ -1,444 +1,496 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CampusHub – Your Study Companion</title>
-    <meta name="description"
-        content="CampusHub helps students find notes, resources, and study material for every college, branch, and semester." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CampX Notes – For Students, By Students</title>
+  <meta name="description" content="Find and share notes across all colleges in India. The ultimate student platform for B.Tech, BCA, MCA and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
-
-<body>
-    <!-- ── HANGING LAMP (DARK MODE TOGGLE) ── -->
-    <div class="lamp-container" id="lampToggle" onclick="toggleDarkMode()">
-        <div class="wire"></div>
-        <div class="lamp-shade"></div>
-        <div class="bulb"></div>
-        <div class="switch-string"></div>
+<body class="dark-mode">
+  <!-- ── LAMP TOGGLE ── -->
+  <div class="lamp-wrap" id="lampToggle" onclick="toggleDarkMode()" title="Toggle theme">
+    <div class="lamp-wire"></div>
+    <div class="lamp-head">
+      <div class="lamp-bulb" id="lampBulb"></div>
     </div>
-
-    <!-- ── NAVBAR ── -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-inner">
-            <a class="nav-logo" href="#" onclick="navigateTo('home')">
-                <div class="logo-icon">📚</div>
-                <span>CampusHub</span>
-            </a>
-            <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Open menu">
-                <span></span><span></span><span></span>
+    <div class="lamp-string" id="lampString"></div>
+  </div>
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="#" onclick="navigateTo('home')">
+        <div class="logo-mark">C<sup>X</sup></div>
+        <span>CampX Notes</span>
+      </a>
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#" class="nav-link active" id="nav-home" onclick="navigateTo('home')">Home</a></li>
+        <li><a href="#" class="nav-link" id="nav-upload" onclick="guardedNavigate('upload')">Upload</a></li>
+        <li><a href="#" class="nav-link" id="nav-leaderboard" onclick="navigateTo('leaderboard')">Leaderboard</a></li>
+        <li><a href="#" class="nav-link" id="nav-community" onclick="navigateTo('community')">💬 Community</a></li>
+        <li><a href="#" class="nav-link" id="nav-profile" onclick="guardedNavigate('profile')">Profile</a></li>
+        <li><a href="#" class="nav-link premium-link" id="nav-premium" onclick="navigateTo('premium')">⚡ Premium</a></li>
+      </ul>
+      <div class="nav-auth" id="navAuth"></div>
+    </div>
+  </nav>
+  <!-- ── MAIN ── -->
+  <main class="main-wrapper">
+    <!-- HOME PAGE -->
+    <section class="page active" id="page-home">
+      <div class="hero-section">
+        <!-- College BG Image with overlay -->
+        <div class="hero-bg-img"></div>
+        <div class="hero-particles" id="heroParticles"></div>
+        <div class="hero-glow g1"></div>
+        <div class="hero-glow g2"></div>
+        <div class="hero-content">
+          <div class="hero-badge">🎓 India's #1 Student Notes Platform</div>
+          
+          <!-- Google-Style Search (Mid Upside) -->
+          <div class="hero-search-wrap google-style-search">
+            <svg class="search-icon-hero" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="text" id="heroSearch" class="hero-search" placeholder="Search by College, Branch, Semester..." oninput="handleHeroSearch()" autocomplete="off" />
+            <div class="search-dropdown" id="searchDropdown"></div>
+          </div>
+          <h1 class="hero-title">For Students,<br><span class="gradient-text">By Students</span></h1>
+          <p class="hero-sub">Find, share, and discover notes from students across all colleges in India. B.Tech, BCA, MCA and more.</p>
+          <!-- CTA Buttons -->
+          <div class="hero-btns">
+            <button class="btn-get-started" onclick="navigateTo('explore')">
+              Get Started
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#" class="nav-link active" id="nav-home" onclick="navigateTo('home')">Home</a></li>
-                <li><a href="#" class="nav-link" id="nav-upload" onclick="guardedNavigate('upload')">Upload</a></li>
-                <li><a href="#" class="nav-link" id="nav-leaderboard"
-                        onclick="navigateTo('leaderboard')">Leaderboard</a></li>
-                <li><a href="#" class="nav-link" id="nav-profile" onclick="navigateTo('profile')">Profile</a></li>
-            </ul>
-            <!-- AUTH AREA (rendered by JS) -->
-            <div class="nav-auth" id="navAuth"></div>
+            <button class="btn-premium-hero" onclick="navigateTo('premium')">
+              ⚡ Buy Premium
+            </button>
+          </div>
+          <!-- Stats -->
+          <div class="hero-stats">
+            <div class="hstat"><span class="hstat-n" id="statNotes">2,400+</span><span class="hstat-l">Notes Shared</span></div>
+            <div class="hstat-div"></div>
+            <div class="hstat"><span class="hstat-n" id="statUsers">1,200+</span><span class="hstat-l">Students</span></div>
+            <div class="hstat-div"></div>
+            <div class="hstat"><span class="hstat-n">500+</span><span class="hstat-l">Colleges</span></div>
+            <div class="hstat-div"></div>
+            <div class="hstat"><span class="hstat-n">100+</span><span class="hstat-l">Cities</span></div>
+          </div>
         </div>
-    </nav>
-
-    <!-- ── PAGES ── -->
-    <main class="main-wrapper">
-
-        <!-- HOME PAGE -->
-        <section class="page active" id="page-home">
-            <div class="hero-overlay"></div>
-            <div class="container hero-container minimal-mvp">
-                <div class="akgec-badge">Ajay Kumar Garg Engineering College, Ghaziabad</div>
-                <h1 class="hero-title">Find Notes for Your Semester</h1>
-                <p class="hero-sub">Notes for AKGEC Students</p>
-
-                <div class="filter-card minimal" id="filterCard">
-                    <div class="filter-fields-row">
-                        <div class="filter-group">
-                            <label for="selectBranch">Branch</label>
-                            <div class="select-wrapper">
-                                <select id="selectBranch">
-                                    <option value="">Select Branch</option>
-                                    <option>CSE (AI & ML)</option>
-                                    <option>CSE (Data Science)</option>
-                                    <option>IT</option>
-                                    <option>ECE</option>
-                                    <option>Mechanical</option>
-                                    <option>Civil</option>
-                                </select>
-                                <span class="select-arrow">▾</span>
-                            </div>
-                        </div>
-
-                        <div class="filter-group">
-                            <label for="selectSemester">Semester</label>
-                            <div class="select-wrapper">
-                                <select id="selectSemester">
-                                    <option value="">Select Semester</option>
-                                    <option>Semester 1</option>
-                                    <option>Semester 2</option>
-                                    <option>Semester 3</option>
-                                    <option>Semester 4</option>
-                                    <option>Semester 5</option>
-                                    <option>Semester 6</option>
-                                    <option>Semester 7</option>
-                                    <option>Semester 8</option>
-                                </select>
-                                <span class="select-arrow">▾</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button class="btn-primary hero-btn-mvp" onclick="handleExplore()">
-                        Explore Notes →
-                    </button>
-                </div>
+      </div>
+      <!-- Recent Notes Section -->
+      <div class="container section-gap">
+        <div class="section-header">
+          <h2 class="section-heading">Recently Uploaded</h2>
+          <button class="btn-link" onclick="navigateTo('explore')">View all →</button>
+        </div>
+        <div class="recent-notes-grid" id="recentNotesGrid">
+          <div class="notes-loading">Loading recent notes...</div>
+        </div>
+      </div>
+      <!-- How it works -->
+      <div class="container section-gap">
+        <h2 class="section-heading center">How It Works</h2>
+        <div class="steps-grid">
+          <div class="step-card"><div class="step-num">1</div><div class="step-icon">🏫</div><h3>Select College</h3><p>Choose your college from hundreds of institutes across India.</p></div>
+          <div class="step-card"><div class="step-num">2</div><div class="step-icon">📚</div><h3>Pick Subject</h3><p>Select your course, branch, and semester to find relevant subjects.</p></div>
+          <div class="step-card"><div class="step-num">3</div><div class="step-icon">📄</div><h3>Get Notes</h3><p>Browse notes uploaded by fellow students and download instantly.</p></div>
+          <div class="step-card"><div class="step-num">4</div><div class="step-icon">⬆️</div><h3>Share Back</h3><p>Upload your own notes and help others while earning points.</p></div>
+        </div>
+      </div>
+    </section>
+    <!-- EXPLORE PAGE (College/Branch/Semester Selector) -->
+    <section class="page" id="page-explore">
+      <div class="container explore-container">
+        <div class="explore-hero">
+          <h2>Find Your Notes</h2>
+          <p>Select your college, course, branch and semester to get started</p>
+        </div>
+        <div class="selector-card" id="selectorCard">
+          <div class="selector-steps">
+            <div class="sel-step active" id="sstep-1">1. College</div>
+            <div class="sel-step" id="sstep-2">2. Course</div>
+            <div class="sel-step" id="sstep-3">3. Branch</div>
+            <div class="sel-step" id="sstep-4">4. Semester</div>
+          </div>
+          <!-- Step 1: College -->
+          <div class="sel-panel active" id="sel-1">
+            <h3>Select Your College</h3>
+            <div class="college-search-wrap">
+              <input type="text" id="collegeSearch" class="sel-input" placeholder="Type to search college..." oninput="filterColleges()" />
             </div>
-        </section>
-
-        <!-- NOTES PAGE -->
-        <section class="page" id="page-notes">
-            <div class="container notes-container">
-                <div class="page-header">
-                    <button class="back-btn" onclick="navigateTo('home')">
-                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
-                            viewBox="0 0 24 24">
-                            <path d="M19 12H5M12 19l-7-7 7-7" />
-                        </svg>
-                        Back
-                    </button>
-                    <div class="page-header-text">
-                        <h2>📖 Study Notes</h2>
-                        <p id="notesSubtitle">Showing all subjects</p>
-                    </div>
+            <div class="college-list" id="collegeList"></div>
+          </div>
+          <!-- Step 2: Course -->
+          <div class="sel-panel" id="sel-2">
+            <button class="back-sel" onclick="goSelStep(1)">← Back</button>
+            <h3>Select Course</h3>
+            <div class="options-grid" id="courseList"></div>
+          </div>
+          <!-- Step 3: Branch -->
+          <div class="sel-panel" id="sel-3">
+            <button class="back-sel" onclick="goSelStep(2)">← Back</button>
+            <h3>Select Branch</h3>
+            <div class="options-grid" id="branchList"></div>
+          </div>
+          <!-- Step 4: Semester -->
+          <div class="sel-panel" id="sel-4">
+            <button class="back-sel" onclick="goSelStep(3)">← Back</button>
+            <h3>Select Semester</h3>
+            <div class="sem-grid" id="semGrid"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SUBJECTS PAGE -->
+    <section class="page" id="page-subjects">
+      <div class="container">
+        <div class="page-header-bar">
+          <button class="back-btn" onclick="navigateTo('explore')">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back
+          </button>
+          <div>
+            <h2 id="subjectsPageTitle">Subjects</h2>
+            <p id="subjectsPageMeta" class="page-meta"></p>
+          </div>
+        </div>
+        <div class="subject-grid" id="subjectGrid"></div>
+      </div>
+    </section>
+    <!-- NOTES LIST PAGE -->
+    <section class="page" id="page-notes">
+      <div class="container">
+        <div class="page-header-bar">
+          <button class="back-btn" onclick="navigateTo('subjects')">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back
+          </button>
+          <div>
+            <h2 id="notesPageTitle">Notes</h2>
+            <p id="notesPageMeta" class="page-meta"></p>
+          </div>
+        </div>
+        <div class="notes-toolbar">
+          <div class="notes-search-wrap">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="text" id="noteSearchInput" class="notes-search" placeholder="Search notes..." oninput="onNotesSearch()" />
+          </div>
+          <div class="select-wrap">
+            <select id="notesSortSelect" class="sort-sel" onchange="onNotesSort()">
+              <option value="latest">🕐 Latest</option>
+              <option value="top">⭐ Top Rated</option>
+              <option value="downloads">⬇ Most Downloaded</option>
+            </select>
+          </div>
+        </div>
+        <div class="result-count" id="noteResultCount"></div>
+        <div class="notes-list" id="notesList"></div>
+      </div>
+    </section>
+    <!-- UPLOAD PAGE -->
+    <section class="page" id="page-upload">
+      <div class="container upload-container">
+        <h2 class="page-title">📤 Upload Notes</h2>
+        <p class="page-sub">Share your knowledge. Top contributors earn badges and points!</p>
+        <div class="upload-card">
+          <form id="uploadForm" onsubmit="handleUpload(event)">
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Note Title *</label>
+                <input type="text" id="upTitle" class="form-input" placeholder="e.g. OS Unit 2 – Process Scheduling" required />
+              </div>
+              <div class="form-group">
+                <label>College *</label>
+                <input type="text" id="upCollege" class="form-input" placeholder="e.g. AKGEC Ghaziabad" required />
+              </div>
+              <div class="form-group">
+                <label>Course *</label>
+                <select id="upCourse" class="form-input" required>
+                  <option value="">Select Course</option>
+                  <option>B.Tech</option>
+                  <option>BCA</option>
+                  <option>MCA</option>
+                  <option>B.Sc</option>
+                  <option>MBA</option>
+                  <option>Diploma</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Branch *</label>
+                <select id="upBranch" class="form-input" required>
+                  <option value="">Select Branch</option>
+                  <option>CSE</option>
+                  <option>CSE (AI & ML)</option>
+                  <option>CSE (Data Science)</option>
+                  <option>IT</option>
+                  <option>ECE</option>
+                  <option>ME</option>
+                  <option>Civil</option>
+                  <option>EE</option>
+                  <option>Chemical</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Semester *</label>
+                <select id="upSemester" class="form-input" required>
+                  <option value="">Select Semester</option>
+                  <option>Semester 1</option><option>Semester 2</option>
+                  <option>Semester 3</option><option>Semester 4</option>
+                  <option>Semester 5</option><option>Semester 6</option>
+                  <option>Semester 7</option><option>Semester 8</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Subject *</label>
+                <input type="text" id="upSubject" class="form-input" placeholder="e.g. Operating Systems" required />
+              </div>
+              <div class="form-group full">
+                <label>Chapter / Topic</label>
+                <input type="text" id="upChapter" class="form-input" placeholder="e.g. Chapter 3 – Memory Management" />
+              </div>
+              <div class="form-group full">
+                <label>Upload PDF / Image File</label>
+                <div class="file-drop-zone" id="fileDropZone" onclick="document.getElementById('upFile').click()">
+                  <div class="fdz-icon">📁</div>
+                  <p class="fdz-text">Click to upload or drag & drop</p>
+                  <p class="fdz-sub">PDF, PNG, JPG (max 20MB)</p>
+                  <input type="file" id="upFile" accept=".pdf,.png,.jpg,.jpeg" style="display:none" onchange="onFileSelect(this)" />
                 </div>
-
-                <div class="search-bar-wrap">
-                    <svg class="search-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
-                        viewBox="0 0 24 24">
-                        <circle cx="11" cy="11" r="8" />
-                        <path d="m21 21-4.35-4.35" />
-                    </svg>
-                    <input type="text" id="searchInput" class="search-bar" placeholder="Search subjects…"
-                        oninput="filterSubjects()" />
-                </div>
-
-                <div class="subject-grid" id="subjectGrid">
-                    <!-- Cards injected by JS -->
-                </div>
+                <div class="file-chosen" id="fileChosen"></div>
+              </div>
+              <div class="form-group full">
+                <label>OR Paste Link (Google Drive / PDF URL)</label>
+                <input type="url" id="upLink" class="form-input" placeholder="https://drive.google.com/..." />
+              </div>
             </div>
-        </section>
-
-        <!-- SUBJECT DETAIL / NOTES BROWSING PAGE -->
-        <section class="page" id="page-subject">
-            <div class="container subject-container">
-
-                <!-- Header -->
-                <div class="page-header">
-                    <button class="back-btn" onclick="navigateTo('notes')">
-                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
-                            viewBox="0 0 24 24">
-                            <path d="M19 12H5M12 19l-7-7 7-7" />
-                        </svg>
-                        Back
-                    </button>
-                    <div class="page-header-text">
-                        <h2 id="subjectTitle">Physics</h2>
-                        <p id="subjectMeta">12 notes · 4 contributors</p>
-                    </div>
-                </div>
-
-                <!-- Toolbar: Search + Sort -->
-                <div class="notes-toolbar">
-                    <div class="notes-search-wrap">
-                        <svg class="search-icon" width="16" height="16" fill="none" stroke="currentColor"
-                            stroke-width="2" viewBox="0 0 24 24">
-                            <circle cx="11" cy="11" r="8" />
-                            <path d="m21 21-4.35-4.35" />
-                        </svg>
-                        <input type="text" id="noteSearchInput" class="notes-search-bar"
-                            placeholder="Search notes by title or chapter…" oninput="onNotesSearch()" />
-                    </div>
-
-                    <div class="sort-wrap">
-                        <label for="sortSelect" class="sort-label">Sort by</label>
-                        <div class="select-wrapper sort-select-wrapper">
-                            <select id="sortSelect" class="sort-select" onchange="onNotesSort()">
-                                <option value="latest">🕐 Latest</option>
-                                <option value="top-rated">⭐ Top Rated</option>
-                                <option value="most-downloaded">⬇ Most Downloaded</option>
-                            </select>
-                            <span class="select-arrow">▾</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Result count -->
-                <div class="note-result-count" id="noteResultCount"></div>
-
-                <!-- Note Cards -->
-                <div class="note-cards-list" id="noteCards">
-                    <!-- Injected by JS -->
-                </div>
-
+            <button type="submit" class="btn-primary full-w" id="uploadBtn">Upload Notes</button>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- AUTH PAGE -->
+    <section class="page" id="page-auth">
+      <div class="auth-wrapper">
+        <div class="auth-card">
+          <div class="auth-logo">
+            <div class="logo-mark sm">C<sup>X</sup></div>
+            <span>CampX Notes</span>
+          </div>
+          <div class="auth-tabs">
+            <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Log In</button>
+            <button class="auth-tab" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+          </div>
+          <!-- Login -->
+          <form class="auth-form active" id="form-login" onsubmit="handleLogin(event)" novalidate>
+            <div class="auth-field">
+              <label>Email</label>
+              <input type="email" id="loginEmail" class="auth-input" placeholder="you@college.edu" required />
             </div>
-        </section>
-
-        <!-- UPLOAD PAGE -->
-        <section class="page" id="page-upload">
-            <div class="container upload-container">
-                <h2 class="section-title">📤 Upload Notes</h2>
-                <p class="section-sub">Share your knowledge and help your peers. Top contributors earn badges!</p>
-
-                <div class="upload-card">
-                    <form id="uploadForm" onsubmit="handleUpload(event)">
-                        <div class="upload-fields">
-                            <div class="field-group">
-                                <label for="upTitle">Note Title</label>
-                                <input type="text" id="upTitle" class="text-input"
-                                    placeholder="e.g. Thermodynamics Formula Sheet" required />
-                            </div>
-                            <div class="field-group">
-                                <label for="upSubject">Subject</label>
-                                <div class="select-wrapper">
-                                    <select id="upSubject" class="text-input" required>
-                                        <option value="">Select Subject</option>
-                                        <option value="maths1">Mathematics 1</option>
-                                        <option value="physics">Physics</option>
-                                        <option value="chemistry">Chemistry</option>
-                                        <option value="bee">Basic Electrical Engineering</option>
-                                        <option value="eng-mech">Engineering Mechanics</option>
-                                        <option value="maths2">Mathematics 2</option>
-                                        <option value="pps">Programming for Problem Solving</option>
-                                    </select>
-                                    <span class="select-arrow">▾</span>
-                                </div>
-                            </div>
-                            <div class="field-group">
-                                <label for="upChapter">Chapter / Topic</label>
-                                <input type="text" id="upChapter" class="text-input"
-                                    placeholder="e.g. Chapter 1 – Intro" required />
-                            </div>
-                            <div class="field-group">
-                                <label for="upPdfFile">Upload PDF/PNG File</label>
-                                <input type="file" id="upPdfFile" class="text-input" accept=".pdf,.png,.jpg,.jpeg"
-                                    style="padding: 0.5rem;" />
-                            </div>
-                            <div class="field-group">
-                                <label for="upDriveLink">OR Paste Drive/PDF Link</label>
-                                <input type="url" id="upDriveLink" class="text-input"
-                                    placeholder="https://drive.google.com/..." />
-                            </div>
-                        </div>
-                        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 1rem;">Upload
-                            Notes</button>
-                    </form>
-                </div>
+            <div class="auth-field">
+              <label>Password</label>
+              <div class="pw-wrap">
+                <input type="password" id="loginPassword" class="auth-input" placeholder="••••••••" required />
+                <button type="button" class="pw-eye" onclick="togglePw('loginPassword',this)">👁</button>
+              </div>
             </div>
-        </section>
-
-
-
-        <!-- ADMIN PANEL -->
-        <section class="page" id="page-admin">
-            <div class="container admin-container">
-                <div class="admin-header">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <h2 class="section-title">🛡️ Admin Dashboard</h2>
-                            <p class="section-sub">Review and moderate pending note uploads.</p>
-                        </div>
-                        <div class="akgec-badge-admin">MODERATION QUEUE</div>
-                    </div>
-                </div>
-                <!-- Controls and Pending List -->
-                <div id="adminPendingList" class="admin-pending-list">
-                    <!-- Pending notes injected by JS -->
-                </div>
-
-                <!-- ── DEVELOPER INFO (ADMIN ONLY) ── -->
-                <div class="app-footer"
-                    style="margin-top:2rem; padding: 2rem; background: var(--white); border-radius: 12px; border: 1px solid var(--slate-200);">
-                    <div class="container footer-content" style="padding:0">
-                        <p class="developer-credit">Built with ❤️ by <strong>Nishant Singh</strong></p>
-                        <div class="developer-contact">
-                            <a href="mailto:nishantsingh2206@gmail.com">nishantsingh2206@gmail.com</a>
-                            <span class="dot">·</span>
-                            <span>Mobile: 7505731055</span>
-                        </div>
-                    </div>
-                </div>
-
+            <div class="auth-error" id="loginError"></div>
+            <button type="submit" class="btn-primary full-w">Log In →</button>
+            <div class="auth-or"><span>or</span></div>
+            <button type="button" class="btn-google" onclick="handleGoogleLogin()">
+              <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.29-8.16 2.29-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+              Continue with Google
+            </button>
+            <p class="auth-switch">New here? <a href="#" onclick="switchTab('signup')">Sign up</a></p>
+          </form>
+          <!-- Signup -->
+          <form class="auth-form" id="form-signup" onsubmit="handleSignup(event)" novalidate>
+            <div class="auth-field">
+              <label>Full Name</label>
+              <input type="text" id="signupName" class="auth-input" placeholder="Rahul Sharma" required />
             </div>
-        </section>
-
-        <!-- LEADERBOARD PAGE -->
-        <section class="page" id="page-leaderboard">
-            <div class="container leaderboard-container">
-                <h2 class="section-title">🏆 Leaderboard</h2>
-                <p class="section-sub">Top contributors this month. Upload notes to earn points!</p>
-
-                <div class="podium-row">
-                    <div class="podium-item silver">
-                        <div class="podium-avatar">SK</div>
-                        <div class="podium-name">Suresh K.</div>
-                        <div class="podium-pts">840 pts</div>
-                        <div class="podium-rank">🥈 2nd</div>
-                    </div>
-                    <div class="podium-item gold">
-                        <div class="podium-avatar">AM</div>
-                        <div class="podium-name">Aryan M.</div>
-                        <div class="podium-pts">1,240 pts</div>
-                        <div class="podium-rank">🥇 1st</div>
-                    </div>
-                    <div class="podium-item bronze">
-                        <div class="podium-avatar">PR</div>
-                        <div class="podium-name">Priya R.</div>
-                        <div class="podium-pts">720 pts</div>
-                        <div class="podium-rank">🥉 3rd</div>
-                    </div>
-                </div>
-
-                <div class="lb-list" id="lbList"></div>
+            <div class="auth-field">
+              <label>Email</label>
+              <input type="email" id="signupEmail" class="auth-input" placeholder="you@college.edu" required />
             </div>
-        </section>
-
-        <!-- PROFILE PAGE -->
-        <section class="page" id="page-profile">
-            <div class="container profile-container">
-                <div class="profile-hero">
-                    <div class="profile-avatar-lg">RS</div>
-                    <h2 class="profile-name">Rahul Sharma</h2>
-                    <p class="profile-college">IIT Bombay · CSE · Sem 5</p>
-                    <div class="profile-badges">
-                        <span class="badge">⭐ Top Contributor</span>
-                        <span class="badge">📚 100+ Uploads</span>
-                        <span class="badge">🔥 7-Day Streak</span>
-                    </div>
-                </div>
-
-                <div class="profile-stats">
-                    <div class="pstat"><span class="pstat-n">142</span><span class="pstat-l">Uploads</span></div>
-                    <div class="pstat"><span class="pstat-n">3.2K</span><span class="pstat-l">Downloads</span></div>
-                    <div class="pstat"><span class="pstat-n">980</span><span class="pstat-l">Points</span></div>
-                </div>
-
-                <div class="profile-section">
-                    <h3>Recent Uploads</h3>
-                    <div class="recent-list">
-                        <div class="recent-item"><span class="ri-icon">📄</span>
-                            <div>
-                                <p class="ri-title">Thermodynamics – Unit 2</p>
-                                <p class="ri-meta">Mech · Sem 3 · 2 days ago</p>
-                            </div><span class="ri-dls">128 ↓</span>
-                        </div>
-                        <div class="recent-item"><span class="ri-icon">📄</span>
-                            <div>
-                                <p class="ri-title">Data Structures Notes</p>
-                                <p class="ri-meta">CSE · Sem 3 · 5 days ago</p>
-                            </div><span class="ri-dls">245 ↓</span>
-                        </div>
-                        <div class="recent-item"><span class="ri-icon">📄</span>
-                            <div>
-                                <p class="ri-title">Engineering Maths – Integration</p>
-                                <p class="ri-meta">All · Sem 2 · 1 week ago</p>
-                            </div><span class="ri-dls">310 ↓</span>
-                        </div>
-                    </div>
-                </div>
-
-                <button class="btn-outline" onclick="showToast('Logging out… 👋')">Log Out</button>
+            <div class="auth-field">
+              <label>Password</label>
+              <div class="pw-wrap">
+                <input type="password" id="signupPassword" class="auth-input" placeholder="Min 6 characters" required />
+                <button type="button" class="pw-eye" onclick="togglePw('signupPassword',this)">👁</button>
+              </div>
             </div>
-        </section>
-
-        <!-- LOGIN / SIGNUP PAGE -->
-        <section class="page" id="page-auth">
-            <div class="auth-wrapper">
-                <div class="auth-card">
-
-                    <!-- Logo -->
-                    <div class="auth-logo">
-                        <div class="logo-icon" style="width:44px;height:44px;font-size:1.25rem">📚</div>
-                        <span class="auth-brand">CampusHub</span>
-                    </div>
-
-                    <!-- Tabs -->
-                    <div class="auth-tabs">
-                        <button class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Log In</button>
-                        <button class="auth-tab" id="tab-signup" onclick="switchAuthTab('signup')">Sign Up</button>
-                    </div>
-
-                    <!-- LOGIN FORM -->
-                    <form class="auth-form active" id="form-login" onsubmit="handleLogin(event)" novalidate>
-                        <div class="auth-field">
-                            <label for="loginEmail">Email</label>
-                            <input type="email" id="loginEmail" class="auth-input" placeholder="you@college.edu"
-                                required />
-                        </div>
-                        <div class="auth-field">
-                            <label for="loginPassword">Password</label>
-                            <div class="pw-wrap">
-                                <input type="password" id="loginPassword" class="auth-input"
-                                    placeholder="Enter password" required />
-                                <button type="button" class="pw-toggle" onclick="togglePw('loginPassword', this)"
-                                    aria-label="Show password">👁</button>
-                            </div>
-                        </div>
-                        <div class="auth-error" id="loginError"></div>
-                        <button type="submit" class="btn-primary auth-submit">Log In →</button>
-                        <p class="auth-switch">Don't have an account? <a href="#" onclick="switchAuthTab('signup')">Sign
-                                up</a></p>
-                    </form>
-
-                    <!-- SIGNUP FORM -->
-                    <form class="auth-form" id="form-signup" onsubmit="handleSignup(event)" novalidate>
-                        <div class="auth-field">
-                            <label for="signupName">Full Name</label>
-                            <input type="text" id="signupName" class="auth-input" placeholder="Rahul Sharma" required />
-                        </div>
-                        <div class="auth-field">
-                            <label for="signupEmail">Email</label>
-                            <input type="email" id="signupEmail" class="auth-input" placeholder="you@college.edu"
-                                required />
-                        </div>
-                        <div class="auth-field">
-                            <label for="signupPassword">Password</label>
-                            <div class="pw-wrap">
-                                <input type="password" id="signupPassword" class="auth-input"
-                                    placeholder="Min. 6 characters" required />
-                                <button type="button" class="pw-toggle" onclick="togglePw('signupPassword', this)"
-                                    aria-label="Show password">👁</button>
-                            </div>
-                        </div>
-                        <div class="auth-field">
-                            <label for="signupCollege">College <span class="optional">(optional)</span></label>
-                            <input type="text" id="signupCollege" class="auth-input" placeholder="IIT Bombay" />
-                        </div>
-                        <div class="auth-error" id="signupError"></div>
-                        <button type="submit" class="btn-primary auth-submit">Create Account →</button>
-                        <p class="auth-switch">Already have an account? <a href="#" onclick="switchAuthTab('login')">Log
-                                in</a></p>
-                    </form>
-
-                </div>
+            <div class="auth-field">
+              <label>College <span class="opt">(optional)</span></label>
+              <input type="text" id="signupCollege" class="auth-input" placeholder="Your College Name" />
             </div>
-        </section>
-
-    </main>
-
-    <!-- TOAST -->
-    <div id="toast" class="toast"></div>
-
-    <!-- Firebase v9 Compat Scripts -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
-
-    <script src="app.js"></script>
+            <div class="auth-error" id="signupError"></div>
+            <button type="submit" class="btn-primary full-w">Create Account →</button>
+            <div class="auth-or"><span>or</span></div>
+            <button type="button" class="btn-google" onclick="handleGoogleLogin()">
+              <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.29-8.16 2.29-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+              Continue with Google
+            </button>
+            <p class="auth-switch">Already have an account? <a href="#" onclick="switchTab('login')">Log in</a></p>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- LEADERBOARD PAGE -->
+    <section class="page" id="page-leaderboard">
+      <div class="container lb-container">
+        <h2 class="page-title">🏆 Leaderboard</h2>
+        <p class="page-sub">Top contributors this month. Upload notes to earn points!</p>
+        <div class="lb-list" id="lbList"><div class="notes-loading">Loading...</div></div>
+      </div>
+    </section>
+    <!-- PROFILE PAGE -->
+    <section class="page" id="page-profile">
+      <div class="container" id="profileContainer"></div>
+    </section>
+    <!-- PREMIUM PAGE -->
+    <section class="page" id="page-premium">
+      <div class="container premium-container">
+        <div class="premium-hero">
+          <div class="premium-badge">⚡ PREMIUM</div>
+          <h2>Unlock CampX Premium</h2>
+          <p>Get access to exclusive notes, ad-free experience, and priority support.</p>
+        </div>
+        <div class="plans-grid">
+          <div class="plan-card free">
+            <div class="plan-name">Free</div>
+            <div class="plan-price">₹0 <span>/month</span></div>
+            <ul class="plan-features">
+              <li>✓ Access public notes</li>
+              <li>✓ Upload up to 5 notes/month</li>
+              <li>✓ Basic search</li>
+              <li class="no">✗ Top-rated curated notes</li>
+              <li class="no">✗ Ad-free experience</li>
+              <li class="no">✗ Priority upload review</li>
+            </ul>
+            <button class="btn-plan" onclick="navigateTo('auth')">Get Started Free</button>
+          </div>
+          <div class="plan-card premium popular">
+            <div class="popular-label">Most Popular</div>
+            <div class="plan-name">Premium</div>
+            <div class="plan-price">₹49 <span>/month</span>
+              <div class="plan-free-note">⚡ 100 pts = 1 month FREE!</div>
+            </div>
+            <ul class="plan-features">
+              <li>✓ Everything in Free</li>
+              <li>✓ Unlimited uploads</li>
+              <li>✓ Access 5★ Top-rated notes</li>
+              <li>✓ Community section access</li>
+              <li>✓ Ad-free experience</li>
+              <li>✓ Priority review (24hr)</li>
+              <li>✓ Premium badge on profile</li>
+            </ul>
+            <button class="btn-plan premium" onclick="showToast('Premium launching soon! 🚀')">Coming Soon – ₹49/mo</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ADMIN PAGE -->
+    <section class="page" id="page-admin">
+      <div class="container">
+        <div class="admin-header-bar">
+          <div>
+            <h2 class="page-title">🛡️ Admin Panel</h2>
+            <p class="page-sub">Manage all notes uploaded by students</p>
+          </div>
+          <div style="display:flex;gap:1rem;align-items:center">
+            <button class="btn-link" onclick="buildAdmin()">🔄 Refresh</button>
+            <div class="admin-filters">
+            <button class="filter-btn active" onclick="adminFilter('all', this)">All</button>
+            <button class="filter-btn" onclick="adminFilter('pending', this)">Pending</button>
+            <button class="filter-btn" onclick="adminFilter('approved', this)">Approved</button>
+          </div>
+        </div>
+        <p class="admin-summary" id="adminSummary"></p>
+        <div id="adminList"></div>
+        <!-- Dev Info -->
+        <div class="dev-card">
+          <p>Built with ❤️ by <strong>Nishant Singh</strong></p>
+          <div class="dev-links">
+            <a href="mailto:nishantsingh2206@gmail.com">nishantsingh2206@gmail.com</a>
+            <span>·</span>
+            <span>📞 7505731055</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- COMMUNITY PAGE -->
+    <section class="page" id="page-community">
+      <div class="container comm-container">
+        <h2 class="page-title">💬 Student Community</h2>
+        <p class="page-sub">Ask doubts, share queries, connect with students across India</p>
+        <!-- Post Form -->
+        <div class="comm-post-form-wrap">
+          <form id="commForm" onsubmit="postToComm(event)">
+            <div class="form-grid">
+              <div class="form-group full">
+                <textarea id="commMsg" class="form-input comm-textarea" placeholder="Ask your doubt, share a tip, or post a query..." rows="3" required></textarea>
+              </div>
+              <div class="form-group">
+                <label>Type</label>
+                <select id="commType" class="form-input">
+                  <option value="doubt">🙋 Doubt</option>
+                  <option value="query">❓ Query</option>
+                  <option value="tip">💡 Tip</option>
+                  <option value="discussion">🗣️ Discussion</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Subject (optional)</label>
+                <input type="text" id="commSubject" class="form-input" placeholder="e.g. Operating Systems" />
+              </div>
+            </div>
+            <button type="submit" class="btn-primary" id="commPostBtn" style="margin-top:.5rem">📤 Post</button>
+          </form>
+        </div>
+        <!-- Feed -->
+        <div id="commFeed"><div class="notes-loading">⏳ Loading...</div></div>
+      </div>
+    </section>
+  </main>
+  <!-- SITE FOOTER -->
+  <footer class="site-footer" id="mainFooter">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo-mark sm">C<sup>X</sup></div>
+        <div>
+          <div class="footer-name">CampX Notes</div>
+          <div class="footer-tag">For Students, By Students</div>
+        </div>
+      </div>
+      <div class="footer-links">
+        <button onclick="navigateTo('home')" class="fl">Home</button>
+        <button onclick="navigateTo('explore')" class="fl">Explore</button>
+        <button onclick="navigateTo('leaderboard')" class="fl">Leaderboard</button>
+        <button onclick="navigateTo('community')" class="fl">Community</button>
+        <button onclick="navigateTo('premium')" class="fl">Premium</button>
+      </div>
+      <div class="footer-contact">
+        <div class="fc-line">📧 <a href="mailto:nishantsingh2206@gmail.com">nishantsingh2206@gmail.com</a></div>
+        <div class="fc-line">📞 +91 7505731055</div>
+        <div class="fc-line">📍 Bulandshahr, Uttar Pradesh – 203205</div>
+      </div>
+    </div>
+    <div class="footer-copy">
+      &copy; 2025 CampX Notes. All Rights Reserved. | Built with ❤️ by <strong>Nishant Singh</strong>
+    </div>
+  </footer>
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+  <script src="app.js"></script>
 </body>
-
 </html>
