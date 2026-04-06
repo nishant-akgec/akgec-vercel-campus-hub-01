@@ -72,7 +72,7 @@ const branches = {
 const subjectMap = {
   'CSE': {
     'Semester 1': ['Mathematics-I','Physics','Basic Electrical Engg','Programming for Problem Solving','English & Soft Skills'],
-    'Semester 2': ['Mathematics-II','Chemistry','Basic Electronics','Data Structures','Engineering Graphics'],
+    'Semester 2': ['BAS201 - Engineering Physics', 'BAS203 - Engineering Mathematics-II', 'BEE201 - Fundamentals of Electrical Engineering', 'BCS201 - Programming for Problem solving', 'BAS204 - Environment & Ecology'],
     'Semester 3': ['Discrete Structures','Computer Organization','OOPS w/ JAVA','Operating Systems','Economics for Engg'],
     'Semester 4': ['Theory of Automata','DBMS','Computer Networks','Software Engineering','Design & Analysis of Algos'],
     'Semester 5': ['Compiler Design','AI','Web Technologies','CN-II','Industrial Training'],
@@ -82,7 +82,7 @@ const subjectMap = {
   },
   'IT': {
     'Semester 1': ['Mathematics-I','Physics','Basic Electrical Engg','Programming for Problem Solving','English & Soft Skills'],
-    'Semester 2': ['Mathematics-II','Chemistry','Data Structures','Digital Electronics','Engineering Graphics'],
+    'Semester 2': ['BAS201 - Engineering Physics', 'BAS203 - Engineering Mathematics-II', 'BEE201 - Fundamentals of Electrical Engineering', 'BCS201 - Programming for Problem solving', 'BAS204 - Environment & Ecology'],
     'Semester 3': ['Discrete Math','Computer Architecture','OOP with C++','Operating Systems','Microprocessors'],
     'Semester 4': ['DBMS','Software Engineering','Computer Networks','DAA','Unix Programming'],
     'Semester 5': ['Web Technology','Compiler Design','AI','Mobile Applications','Seminar'],
@@ -92,7 +92,7 @@ const subjectMap = {
   },
   'ECE': {
     'Semester 1': ['Mathematics-I','Physics','Basic Electrical Engg','EG','English'],
-    'Semester 2': ['Mathematics-II','Chemistry','Digital Electronics','Network Theory','EMT'],
+    'Semester 2': ['BAS201 - Engineering Physics', 'BAS203 - Engineering Mathematics-II', 'BEE201 - Fundamentals of Electrical Engineering', 'BCS201 - Programming for Problem solving', 'BAS204 - Environment & Ecology'],
     'Semester 3': ['Signals & Systems','Electronic Devices','Analog Circuits','Communication Engg-I','Microprocessors'],
     'Semester 4': ['VLSI Design','DSP','Communication Engg-II','Control Systems','PCM'],
     'Semester 5': ['Microwave Engineering','Fiber Optics','Embedded Systems','Information Theory','Mini Project'],
@@ -612,10 +612,10 @@ function resetUploadForm() {
         <div class="form-group"><label>Note Title *</label><input type="text" id="upTitle" class="form-input" placeholder="e.g. OS Unit 2 – Process Scheduling" required /></div>
         <div class="form-group"><label>College *</label><input type="text" id="upCollege" class="form-input" placeholder="e.g. AKGEC Ghaziabad" required /></div>
         <div class="form-group"><label>Course *</label><select id="upCourse" class="form-input" required><option value="">Select Course</option><option>B.Tech</option><option>BCA</option><option>MCA</option><option>B.Sc</option><option>MBA</option><option>Diploma</option></select></div>
-        <div class="form-group"><label>Branch *</label><select id="upBranch" class="form-input" required><option value="">Select Branch</option><option>CSE</option><option>CSE (AI & ML)</option><option>CSE (Data Science)</option><option>IT</option><option>ECE</option><option>ME</option><option>Civil</option><option>EE</option><option>Chemical</option></select></div>
-        <div class="form-group"><label>Semester *</label><select id="upSemester" class="form-input" required><option value="">Select Semester</option><option>Semester 1</option><option>Semester 2</option><option>Semester 3</option><option>Semester 4</option><option>Semester 5</option><option>Semester 6</option><option>Semester 7</option><option>Semester 8</option></select></div>
-        <div class="form-group"><label>Subject *</label><input type="text" id="upSubject" class="form-input" placeholder="e.g. Operating Systems" required /></div>
-        <div class="form-group full"><label>Chapter / Topic</label><input type="text" id="upChapter" class="form-input" placeholder="e.g. Chapter 3 – Memory Management" /></div>
+        <div class="form-group"><label>Branch *</label><select id="upBranch" class="form-input" required onchange="window.populateUploadSubjects && window.populateUploadSubjects()"><option value="">Select Branch</option><option>CSE</option><option>CSE (AI & ML)</option><option>CSE (Data Science)</option><option>IT</option><option>ECE</option><option>ME</option><option>Civil</option><option>EE</option><option>Chemical</option></select></div>
+        <div class="form-group"><label>Semester *</label><select id="upSemester" class="form-input" required onchange="window.populateUploadSubjects && window.populateUploadSubjects()"><option value="">Select Semester</option><option>Semester 1</option><option>Semester 2</option><option>Semester 3</option><option>Semester 4</option><option>Semester 5</option><option>Semester 6</option><option>Semester 7</option><option>Semester 8</option></select></div>
+        <div class="form-group"><label>Subject *</label><select id="upSubject" class="form-input" required><option value="">First select Branch & Semester</option></select></div>
+        <div class="form-group full"><label>Chapter / Topic</label><input type="text" id="upChapter" class="form-input" placeholder="e.g. Unit 1" /></div>
         <div class="form-group full">
           <label>Upload PDF / Image File <span style="color:var(--text3);font-weight:400">(max 20MB)</span></label>
           <div class="file-drop-patches" style="background:rgba(124,58,237,.05);padding:1rem;border-radius:12px;border:1px dashed var(--purple);text-align:center;cursor:pointer" id="fileDropZone" onclick="document.getElementById('upFile').click()">
@@ -636,6 +636,19 @@ function resetUploadForm() {
   const dz = document.getElementById('fileDropZone');
   if (dz) attachDropZone(dz);
 }
+
+window.populateUploadSubjects = function() {
+  const branch = document.getElementById('upBranch')?.value;
+  const sem = document.getElementById('upSemester')?.value;
+  const subjSelect = document.getElementById('upSubject');
+  if (!subjSelect) return;
+  if (!branch || !sem) {
+    subjSelect.innerHTML = '<option value="">First select Branch & Semester</option>';
+    return;
+  }
+  const subjects = getSubjects(branch, sem);
+  subjSelect.innerHTML = subjects.map(s => `<option value="${s.replace(/"/g, '&quot;')}">${s}</option>`).join('');
+};
 
 function attachDropZone(dz) {
   dz.addEventListener('dragover', e => { e.preventDefault(); dz.style.borderColor = '#7c3aed'; });
@@ -1000,9 +1013,17 @@ function renderAdminNotes() {
         <div class="anc-title">${n.title || 'Untitled'}</div>
         <div class="anc-meta">
           <strong>By: ${n.by || 'Unknown'}</strong> · ${n.college || 'Unknown College'}
-          · ${n.branch || ''} · ${n.semester || ''} · ${n.subject || ''}
+          · ${n.branch || ''} · ${n.semester || ''}
         </div>
-        <div class="anc-badges">
+        ${n.status === 'pending' ? `
+          <div style="margin-top:8px; display:flex; gap:8px; align-items:center">
+            <input type="text" id="adminSubj_${n.id}" value="${n.subject || ''}" style="flex:1; padding:4px 8px; border-radius:4px; border:1px solid rgba(255,255,255,0.2); background:transparent; color:#fff; font-size:0.8rem" placeholder="Subject" />
+            <input type="text" id="adminChap_${n.id}" value="${n.chapter || ''}" style="width:70px; padding:4px 8px; border-radius:4px; border:1px solid rgba(255,255,255,0.2); background:transparent; color:#fff; font-size:0.8rem" placeholder="Unit" />
+          </div>
+        ` : `
+          <div class="anc-meta" style="margin-top:4px; color:#a78bfa">📘 ${n.subject || ''} ${n.chapter ? `· ${n.chapter}` : ''}</div>
+        `}
+        <div class="anc-badges" style="margin-top:8px">
           <span class="status-badge ${n.status || 'pending'}">${n.status || 'pending'}</span>
           ${n.size !== 'Unknown' && n.size ? `<span class="status-badge" style="background:rgba(16,185,129,.1);color:#10b981">📦 ${n.size}</span>` : ''}
           <span style="font-size:.72rem;color:var(--text3)">${n.createdAt ? new Date(n.createdAt).toLocaleDateString('en-IN') : ''}</span>
@@ -1019,7 +1040,13 @@ function renderAdminNotes() {
 
 async function approveNote(id, userId) {
   try {
-    await db.collection('notes').doc(id).update({ status: 'approved' });
+    const subjEl = document.getElementById('adminSubj_' + id);
+    const chapEl = document.getElementById('adminChap_' + id);
+    let updateObj = { status: 'approved' };
+    if (subjEl) updateObj.subject = subjEl.value;
+    if (chapEl) updateObj.chapter = chapEl.value;
+
+    await db.collection('notes').doc(id).update(updateObj);
     // Give +10 points on approval
     if (userId) {
       await db.collection('users').doc(userId).update({
